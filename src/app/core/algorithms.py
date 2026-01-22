@@ -55,7 +55,8 @@ def dfs(graph: Graph, start: str) -> list[str]:
     """
     # TODO: implémenter DFS
     # Astuce : pile = list, visited = set
-    pass
+    pile = [] # Création de la pile de départ
+    explored = set() # Création de l'ensemble des noeuds explorés
 
 
 def dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:

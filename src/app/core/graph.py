@@ -29,10 +29,8 @@ class Graph:
     
     def __init__(self):
         """Initialise un graphe vide."""
-        # TODO: initialiser la structure de données
-        # Conseil : utiliser un dictionnaire
-        pass
-    
+        self.graph=dict()
+
     def add_node(self, node: str) -> None:
         """
         Ajoute un nœud au graphe.
@@ -51,7 +49,12 @@ class Graph:
             >>> g.has_node("Paris")
             True
         """
-        # TODO: implémenter
+        if type(node) != str :
+            raise TypeError
+        if  self.has_node(node) :
+            return None
+        else :
+            self.graph[node] = []
         pass
     
     def add_edge(self, a: str, b: str) -> None:
@@ -73,9 +76,12 @@ class Graph:
             >>> g.has_edge("Lyon", "Paris")  # Non orienté !
             True
         """
-        # TODO: implémenter
-        # Attention : graphe NON ORIENTÉ → ajouter dans les deux sens
-        pass
+        self.graph.setdefault(a, [])
+        self.graph.setdefault(b, [])
+        if a not in self.graph[b]:
+            self.graph[b].append(a)
+        if b not in self.graph[a]:
+            self.graph[a].append(b)
     
     def remove_node(self, node: str) -> None:
         """
@@ -87,9 +93,14 @@ class Graph:
         Raises:
             ValueError: Si le nœud n'existe pas
         """
-        # TODO: implémenter
-        # Attention : supprimer aussi le nœud de toutes les listes de voisins
-        pass
+        if self.has_node(node):
+            del self.graph[node]
+            for i in self.nodes():
+                if self.has_edge(i,node):
+                    self.graph[i].remove(node)
+        else: 
+            raise ValueError
+        
     
     def remove_edge(self, a: str, b: str) -> None:
         """
@@ -102,9 +113,8 @@ class Graph:
         Raises:
             ValueError: Si l'arête n'existe pas
         """
-        # TODO: implémenter
-        # Attention : graphe NON ORIENTÉ → supprimer dans les deux sens
-        pass
+        self.graph[a].remove(b)
+        self.graph[b].remove(a)
     
     def neighbors(self, node: str) -> list[str]:
         """
@@ -132,19 +142,22 @@ class Graph:
             >>> g.neighbors("A")
             ['B', 'M', 'Z']  # Toujours en ordre alphabétique
         """
-        # TODO: implémenter
-        # ⚠️ IMPORTANT : retourner une COPIE triée, pas la liste interne
-        pass
+        if node not in self.graph :
+            raise ValueError
+        return sorted(self.graph[node])
     
     def has_node(self, node: str) -> bool:
         """Vérifie si un nœud existe dans le graphe."""
-        # TODO: implémenter
-        pass
+        try:
+            self.graph[node]
+            return True
+        except:
+            return False
+
     
     def has_edge(self, a: str, b: str) -> bool:
         """Vérifie si une arête existe entre deux nœuds."""
-        # TODO: implémenter
-        pass
+        return ((a,b) in self.edges() or (b,a) in self.edges())
     
     def nodes(self) -> list[str]:
         """
@@ -153,8 +166,7 @@ class Graph:
         Returns:
             Liste triée des nœuds (ordre alphabétique)
         """
-        # TODO: implémenter
-        pass
+        return list(self.graph.keys())
     
     def edges(self) -> list[tuple[str, str]]:
         """
@@ -170,14 +182,16 @@ class Graph:
             >>> g.edges()
             [('A', 'B')]  # Ordre normalisé
         """
-        # TODO: implémenter
-        # Astuce : utiliser un set pour éviter les doublons
-        pass
+        edges_list=[]
+        for k in self.graph.keys():
+            for i in self.graph[k]:
+                if (f"{i}",f"{k}") not in edges_list:
+                    edges_list.append((f"{k}",f"{i}"))
+        return edges_list
     
     def __len__(self) -> int:
         """Retourne le nombre de nœuds dans le graphe."""
-        # TODO: implémenter
-        pass
+        return len(self.graph)
     
     def __repr__(self) -> str:
         """Représentation lisible du graphe pour debug."""

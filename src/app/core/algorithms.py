@@ -57,6 +57,19 @@ def dfs(graph: Graph, start: str) -> list[str]:
     # Astuce : pile = list, visited = set
     pile = [] # Création de la pile de départ
     explored = set() # Création de l'ensemble des noeuds explorés
+    result=[]
+    pile.append(start)
+    while pile!=[]:
+        #print(pile)
+        i=pile.pop(0)
+        #print(pile,i,type(i))
+        explored.add(i)
+        result.append(i)
+        temp=graph.neighbors(i)
+        for x in temp:
+            if x not in explored:
+                pile.insert(0,x)
+    return result
 
 
 def dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
@@ -273,3 +286,9 @@ def path_length(path: list[str] | None) -> int:
     if path is None:
         return -1
     return len(path) - 1
+
+"""g = Graph()
+g.add_edge("A", "B")
+g.add_edge("B", "C")
+g.add_edge("C", "D")
+print(dfs(g,"A"))"""

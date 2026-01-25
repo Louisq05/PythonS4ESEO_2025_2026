@@ -53,20 +53,19 @@ def dfs(graph: Graph, start: str) -> list[str]:
            - Marquer comme visité
            - Empiler tous ses voisins non visités
     """
-    # TODO: implémenter DFS
-    # Astuce : pile = list, visited = set
-    pile = [] # Création de la pile de départ
-    explored = set() # Création de l'ensemble des noeuds explorés
-    result=[] # Création de la liste des résultats
-    pile.append(start) # Ajout du start à la pile
-    while pile!=[]:
-        i=pile.pop(0) # Suppression et recupération du premier élément de la pile 
-        explored.add(i) # Ajout de l'élément dans l'ensemble explored
-        result.append(i) # Ajout de l'élément dans la liste des resultats
-        temp=graph.neighbors(i) # temp prend les voisins de l'élément i
-        for x in temp: # boucle qui parcoure les voisins
-            if x not in explored: # Check si x n'est pas dans l'ensemble explored
-                pile.insert(0,x)  #Ajout les voisins pas explorés au début de la liste
+    pile = []                       # Création de la pile de départ
+    explored = set()                # Création de l'ensemble des noeuds explorés
+    result=[]                       # Création de la liste des résultats
+    pile.append(start)              # Ajout du start à la pile
+    while pile!=[]:                 # Tant que la pile n'est pas vide :
+        i=pile.pop()                # On retire le dernier élément : pop() = FO de LIFO
+        if i not in explored:       # Si le noeud n'est pas déja visité :
+            explored.add(i)         # On l'ajoute dans le set des noeuds visités
+            result.append(i)        # Et dans la liste des résultats
+        
+            for x in reversed(graph.neighbors(i)):          # On inverse la sortie neighbors pour contourner le problème de l'odre alpha
+                if x not in explored:                       # Si le noeud n'a pas encore été visité :
+                    pile.append(x)                          # On l'ajoute à la pile : append = LI de LIFO
     return result   
 
 

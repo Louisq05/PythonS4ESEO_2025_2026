@@ -93,9 +93,14 @@ def dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
         Variante de DFS où on stocke le chemin complet dans la pile.
         Pile contient des tuples (nœud, chemin_jusqu'ici).
     """
-    # TODO: implémenter
-    # Astuce : pile contient (noeud, chemin) où chemin est une liste
-    pass
+    path=[]                          #Création de la liste décrivant le chemin
+    if start==goal:                  #On regarde si le chemin est immédiat
+        return [start]
+    for x in dfs(graph,start) :      #Parcours la pile donné par le dfs
+        path.append(x)               #Ajout de l'élement au chemin
+        if x==goal:                  #Si l'élement est l'arrivée
+            return path              #On s'arrete et renvoie le chemin
+    return None
 
 
 # ============================================================================

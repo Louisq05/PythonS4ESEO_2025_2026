@@ -194,27 +194,38 @@ shortest_path(graph: Graph, start: str, goal: str) -> list[str] | None
 
 ## 👥 Équipe
 
-*(Ajouter ici les noms des membres de votre groupe)*
-
-- Membre 1
-- Membre 2
+- BON VICTOR
+- QUIBEUF LOUIS
+- KEMPNICH ARTHUR
 
 ---
 
 ## 📝 Notes de séances
 
 ### Séance 1 – Setup
-- [ ] Repo créé
-- [ ] Premier commit
-- [ ] Structure du projet en place
+- [X] Repo créé
+- [X] Premier commit
+- [X] Structure du projet en place
 
 ### Séance 2 – Graphe
-- [ ] `test_graph.py` passe
+- [X] `test_graph.py` passe
 
 ### Séance 3 – DFS
-- [ ] `test_algorithms_dfs.py` passe
+- [X] `test_algorithms_dfs.py` passe
 
-*(À compléter au fur et à mesure)*
+### Séance 4 – BFS
+- [X] `test_algorithms_bfs.py` passe
+
+### Séance 5 -  Problèmes sur graphes
+-[ ] `test_problems.py` passe
+
+### Séance 7 - Import/Export
+-[ ] `test_io.py` passe
+
+### Séance 6-8 - Interface graphique
+-[ ] Afficher le graphe
+-[ ] Boutons DFS/BFS
+-[ ] Animation/coloration des parcours
 
 ---
 

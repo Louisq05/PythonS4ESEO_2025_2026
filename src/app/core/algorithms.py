@@ -53,9 +53,20 @@ def dfs(graph: Graph, start: str) -> list[str]:
            - Marquer comme visité
            - Empiler tous ses voisins non visités
     """
-    # TODO: implémenter DFS
-    # Astuce : pile = list, visited = set
-    pass
+    pile = []                       # Création de la pile de départ
+    explored = set()                # Création de l'ensemble des noeuds explorés
+    result=[]                       # Création de la liste des résultats
+    pile.append(start)              # Ajout du start à la pile
+    while pile!=[]:                 # Tant que la pile n'est pas vide :
+        i=pile.pop()                # On retire le dernier élément : pop() = FO de LIFO
+        if i not in explored:       # Si le noeud n'est pas déja visité :
+            explored.add(i)         # On l'ajoute dans le set des noeuds visités
+            result.append(i)        # Et dans la liste des résultats
+        
+            for x in reversed(graph.neighbors(i)):          # On inverse la sortie neighbors pour contourner le problème de l'odre alpha
+                if x not in explored:                       # Si le noeud n'a pas encore été visité :
+                    pile.append(x)                          # On l'ajoute à la pile : append = LI de LIFO
+    return result   
 
 
 def dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
@@ -82,9 +93,14 @@ def dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
         Variante de DFS où on stocke le chemin complet dans la pile.
         Pile contient des tuples (nœud, chemin_jusqu'ici).
     """
-    # TODO: implémenter
-    # Astuce : pile contient (noeud, chemin) où chemin est une liste
-    pass
+    path=[]                          #Création de la liste décrivant le chemin
+    if start==goal:                  #On regarde si le chemin est immédiat
+        return [start]
+    for x in dfs(graph,start) :      #Parcours la pile donné par le dfs
+        path.append(x)               #Ajout de l'élement au chemin
+        if x==goal:                  #Si l'élement est l'arrivée
+            return path              #On s'arrete et renvoie le chemin
+    return None
 
 
 # ============================================================================
@@ -124,10 +140,21 @@ def bfs(graph: Graph, start: str) -> list[str]:
            - Marquer comme visité
            - Enfiler tous ses voisins non visités
     """
-    # TODO: implémenter BFS
     # Astuce : file = deque(), visited = set
-    pass
+    file = deque()
+    visited = set()
+    result = []
+    file.append(start)
 
+    while file:
+        node = file.popleft()      
+        if node not in visited:
+            visited.add(node)
+            result.append(node)
+            for neighbor in graph.neighbors(node):  # ordre alphabétique conservé
+                if neighbor not in visited:
+                    file.append(neighbor)
+    return result
 
 def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     """
@@ -158,8 +185,22 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
         Variante de BFS où on stocke le chemin complet dans la file.
         File contient des tuples (nœud, chemin_jusqu'ici).
     """
-    # TODO: implémenter
-    pass
+    if start == goal:
+        return [start]
+    file = deque()
+    visited = set()  
+    file.append((start, [start])) # (noeud actuel, chemin jusqu'ici)
+
+    while file:
+        node, path = file.popleft()
+        if node not in visited:
+            visited.add(node)
+            for neighbor in graph.neighbors(node):
+                if neighbor == goal:
+                    return path + [neighbor]
+                if neighbor not in visited:
+                    file.append((neighbor, path + [neighbor]))
+    return None
 
 
 # ============================================================================

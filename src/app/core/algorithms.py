@@ -141,19 +141,19 @@ def bfs(graph: Graph, start: str) -> list[str]:
            - Enfiler tous ses voisins non visités
     """
     # Astuce : file = deque(), visited = set
-    file = deque()
+    file = deque()                                  # Création de la file : dequeu pour implementer le FIFO
     visited = set()
     result = []
     file.append(start)
 
     while file:
-        node = file.popleft()      
+        node = file.popleft()                       # popleft = FO de FIFO
         if node not in visited:
             visited.add(node)
             result.append(node)
             for neighbor in graph.neighbors(node):  # ordre alphabétique conservé
                 if neighbor not in visited:
-                    file.append(neighbor)
+                    file.append(neighbor)           # append = FI de FIFO
     return result
 
 def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:

@@ -185,21 +185,21 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
         Variante de BFS où on stocke le chemin complet dans la file.
         File contient des tuples (nœud, chemin_jusqu'ici).
     """
-    if start == goal:
-        return [start]
+    if start == goal:               # Si la condition est remplie
+        return [start]              # Sortie de la fonction
     file = deque()
     visited = set()  
-    file.append((start, [start])) # (noeud actuel, chemin jusqu'ici)
+    file.append((start, [start]))   # (noeud actuel, chemin jusqu'ici)
 
     while file:
-        node, path = file.popleft()
+        node, path = file.popleft() # popleft = FO du FIFO
         if node not in visited:
             visited.add(node)
             for neighbor in graph.neighbors(node):
                 if neighbor == goal:
                     return path + [neighbor]
                 if neighbor not in visited:
-                    file.append((neighbor, path + [neighbor]))
+                    file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
     return None
 
 

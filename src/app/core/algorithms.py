@@ -264,9 +264,7 @@ def reachable_from(graph: Graph, start: str) -> set[str]:
         >>> reachable_from(g, "A")
         {'A', 'B'}
     """
-    # TODO: implémenter
-    # Astuce : réutiliser dfs() et convertir en set
-    pass
+    return set(dfs(graph, start))
 
 
 def shortest_path(graph: Graph, start: str, goal: str) -> list[str] | None:

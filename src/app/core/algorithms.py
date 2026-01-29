@@ -293,7 +293,7 @@ def shortest_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     """
     # TODO: implémenter
     # Astuce : appeler bfs_path()
-    pass
+    return bfs_path(graph, start, goal)
 
 
 # ============================================================================

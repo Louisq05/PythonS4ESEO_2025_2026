@@ -238,9 +238,12 @@ def is_connected(graph: Graph) -> bool:
         2. Faire un parcours (DFS ou BFS) depuis ce nœud
         3. Vérifier si tous les nœuds ont été visités
     """
-    # TODO: implémenter
-    # Astuce : réutiliser dfs() ou bfs()
-    pass
+    nodes=(graph.nodes());nodes_dfs=set()
+    if len(nodes)>0:
+        for i in dfs(graph,nodes[0]):
+            for d in dfs(graph,i):nodes_dfs.add(d)
+        return set(nodes)==nodes_dfs
+    return True
 
 
 def reachable_from(graph: Graph, start: str) -> set[str]:

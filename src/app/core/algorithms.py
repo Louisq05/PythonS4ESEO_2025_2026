@@ -238,9 +238,12 @@ def is_connected(graph: Graph) -> bool:
         2. Faire un parcours (DFS ou BFS) depuis ce nœud
         3. Vérifier si tous les nœuds ont été visités
     """
-    # TODO: implémenter
-    # Astuce : réutiliser dfs() ou bfs()
-    pass
+    nodes=(graph.nodes());nodes_dfs=set()
+    if len(nodes)>0:
+        for i in dfs(graph,nodes[0]):
+            for d in dfs(graph,i):nodes_dfs.add(d)
+        return set(nodes)==nodes_dfs
+    return True
 
 
 def reachable_from(graph: Graph, start: str) -> set[str]:
@@ -264,9 +267,7 @@ def reachable_from(graph: Graph, start: str) -> set[str]:
         >>> reachable_from(g, "A")
         {'A', 'B'}
     """
-    # TODO: implémenter
-    # Astuce : réutiliser dfs() et convertir en set
-    pass
+    return set(dfs(graph, start))
 
 
 def shortest_path(graph: Graph, start: str, goal: str) -> list[str] | None:
@@ -293,7 +294,7 @@ def shortest_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     """
     # TODO: implémenter
     # Astuce : appeler bfs_path()
-    pass
+    return bfs_path(graph, start, goal)
 
 
 # ============================================================================

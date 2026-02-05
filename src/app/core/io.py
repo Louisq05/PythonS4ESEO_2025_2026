@@ -37,13 +37,9 @@ def save_graph(graph: Graph, filepath: str | Path) -> None:
         >>> g.add_edge("A", "B")
         >>> save_graph(g, "my_graph.json")
     """
-    data ={
-        "edges": graph.edges() if graph.edges()!=None else [],
-        "nodes": graph.nodes() if graph.nodes()!=None else [] 
-    }
-    print(data)
-    with open(filepath, "w") as f:
-        json.dump(data, f)
+    data=graph_to_dict(graph)       #Transforme le graph en dictionnaire
+    with open(filepath, "w") as f:  #Créer un fichier json 
+        json.dump(data, f)          #Ajout du dictionnaire au graph
 
 
 def load_graph(filepath: str | Path) -> Graph:
@@ -72,14 +68,9 @@ def load_graph(filepath: str | Path) -> Graph:
         >>> g.has_node("A")
         True
     """
-    with open(filepath, "r") as f:
-        data = json.load(f)
-    g=Graph()
-    for i in data["nodes"]:
-        g.add_node(i)
-    for i in data["edges"]:
-        g.add_edge(i[0],i[1])
-    return g
+    with open(filepath, "r") as f:  #Ouverture du fichier json
+        data = json.load(f)         #Lecture et récupération des données
+    return dict_to_graph(data)      #renvoie les données en graph avec la fonction dict_to_graph
 
 
 def graph_to_dict(graph: Graph) -> dict:
@@ -98,8 +89,11 @@ def graph_to_dict(graph: Graph) -> dict:
         >>> graph_to_dict(g)
         {'nodes': ['A', 'B'], 'edges': [['A', 'B']]}
     """
-    # TODO: implémenter
-    pass
+    return {
+        "edges": graph.edges() if graph.edges()!=None else [], 
+        "nodes": graph.nodes() if graph.nodes()!=None else [] 
+    } #Ajout des noeuds et arrêtes
+    
 
 
 def dict_to_graph(data: dict) -> Graph:
@@ -131,14 +125,9 @@ def dict_to_graph(data: dict) -> Graph:
         >>> g.has_edge("A", "B")
         True
     """
-    # TODO: implémenter
-    # Validation requise :
-    # 1. Vérifier que "nodes" et "edges" existent
-    # 2. Créer un graphe vide
-    # 3. Ajouter tous les nœuds
-    # 4. Pour chaque arête :
-    #    - Vérifier format (liste/tuple de 2 éléments)
-    #    - Vérifier que a et b existent dans nodes
-    #    - Ajouter l'arête
-    # 5. Gérer les exceptions proprement
-    pass
+    g=Graph()                   #Initialisation d'un graph vide
+    for i in data["nodes"]:     #Parcours les noeuds contenu dans le Json
+        g.add_node(i)           #Ajout des noeuds au graph
+    for i in data["edges"]:     #Parcours les arrêtes contenu dans le Json
+        g.add_edge(i[0],i[1])   #Ajout des graphes au graph
+    return g                    #Renvoie le graph

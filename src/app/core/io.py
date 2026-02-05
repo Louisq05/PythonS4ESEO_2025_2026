@@ -37,10 +37,13 @@ def save_graph(graph: Graph, filepath: str | Path) -> None:
         >>> g.add_edge("A", "B")
         >>> save_graph(g, "my_graph.json")
     """
-    # TODO: implémenter
-    # Astuce : utiliser graph.nodes() et graph.edges()
-    # Convertir les edges en liste de listes pour JSON
-    pass
+    data ={
+        "edges": graph.edges() if graph.edges()!=None else [],
+        "nodes": graph.nodes() if graph.nodes()!=None else [] 
+    }
+    print(data)
+    with open(filepath, "w") as f:
+        json.dump(data, f)
 
 
 def load_graph(filepath: str | Path) -> Graph:
@@ -69,14 +72,14 @@ def load_graph(filepath: str | Path) -> Graph:
         >>> g.has_node("A")
         True
     """
-    # TODO: implémenter
-    # Astuce :
-    # 1. Ouvrir et parser le JSON
-    # 2. Créer un graphe vide
-    # 3. Ajouter les nœuds
-    # 4. Ajouter les arêtes
-    # 5. Gérer les exceptions proprement
-    pass
+    with open(filepath, "r") as f:
+        data = json.load(f)
+    g=Graph()
+    for i in data["nodes"]:
+        g.add_node(i)
+    for i in data["edges"]:
+        g.add_edge(i[0],i[1])
+    return g
 
 
 def graph_to_dict(graph: Graph) -> dict:

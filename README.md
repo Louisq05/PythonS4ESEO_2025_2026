@@ -220,7 +220,7 @@ shortest_path(graph: Graph, start: str, goal: str) -> list[str] | None
 - [x] `test_problems.py` passe
 
 ### Séance 7 - Import/Export
-- [ ] `test_io.py` passe
+- [x] `test_io.py` passe
 
 ### Séance 6-8 - Interface graphique
 - [ ] Afficher le graphe

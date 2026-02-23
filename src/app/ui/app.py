@@ -8,7 +8,7 @@ Palier F - Séances 6-8.
 
 import tkinter as tk
 from tkinter import messagebox, filedialog
-from ..core import Graph
+from ..core import Graph,save_graph
 
 
 class GraphExplorerApp:
@@ -61,8 +61,7 @@ class GraphExplorerApp:
     
     def new_graph(self):
         """Crée un nouveau graphe vide."""
-        # TODO: implémenter
-        pass
+        self.graph=Graph()  #On réinitialise le graph pour en faire un nouveau
     
     def load_graph(self):
         """Charge un graphe depuis un fichier JSON."""
@@ -72,9 +71,19 @@ class GraphExplorerApp:
     
     def save_graph(self):
         """Sauvegarde le graphe actuel en JSON."""
-        # TODO: implémenter
-        # Astuce : utiliser filedialog.asksaveasfilename()
-        pass
+        chemin = filedialog.asksaveasfilename(
+        defaultextension=".json",   #Defini le type du fichier par défaut
+        filetypes=[("Fichier JSON", "*.json"),
+                   ("Tous les fichiers", "*.*")], 
+        title="Enregistrer le Graph "
+        )
+
+        if chemin:
+            try:
+                save_graph(self.graph, chemin)                              #Utilise la fonction savegraph de src\app\core\io.py pour enregistrer
+                messagebox.showinfo("Succès", "Fichier enregistré !")       #Affiche la réussite de l'enregistrement
+            except Exception as e:
+                messagebox.showerror("Erreur", str(e))                      #Affiche l'échec lors de l'enregistrement
     
     def add_node(self):
         """Ajoute un nœud au graphe (via dialogue)."""

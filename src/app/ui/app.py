@@ -144,18 +144,24 @@ class GraphExplorerApp:
     
     def add_node(self):
         """Ajoute un nœud au graphe (via dialogue)."""
-        # TODO: implémenter
-        # Astuce : utiliser tk.simpledialog.askstring()
-        pass
+        node_name=self.entry_node.get() 
+        if node_name and node_name.replace(" ","")!="":
+            self.graph.add_node(node_name)
+        self.entry_node.delete(0, tk.END)
     
     def add_edge(self):
         """Ajoute une arête au graphe (via dialogue)."""
-        # TODO: implémenter
-        pass
+        edge1_name = self.entry_edge1.get()
+        edge2_name = self.entry_edge2.get()
+        if edge1_name and edge1_name.replace(" ","")!="" and edge2_name and edge1_name.replace(" ","")!="":
+            self.graph.add_edge(edge1_name,edge2_name)
+            
+        # On vide les deux champs
+        self.entry_edge1.delete(0, tk.END)
+        self.entry_edge2.delete(0, tk.END)
     
     def run_dfs(self):
         """Lance DFS et visualise le résultat."""
-        # TODO: implémenter
         # Astuce : appeler core.algorithms.dfs()
         # puis render.py pour visualiser
         start = simpledialog.askstring("DFS", "Noeud de départ :")
@@ -189,7 +195,6 @@ class GraphExplorerApp:
     
     def show_info(self):
         """Affiche des infos sur le graphe actuel."""
-        # TODO: implémenter
         # Exemple : nombre de nœuds, arêtes, connexité...
         nb_nodes = len(self.graph.nodes)
         nb_edges = len(self.graph.edges)

@@ -8,7 +8,7 @@ Palier F - Séances 6-8.
 
 import tkinter as tk
 from tkinter import messagebox, filedialog
-from ..core import Graph,save_graph
+from ..core import Graph,save_graph,load_graph
 
 
 class GraphExplorerApp:
@@ -49,12 +49,12 @@ class GraphExplorerApp:
         # 4. Frame bas : zone de status/log
         
         # Exemple de structure de base:
-        # top_frame = tk.Frame(self.root)
-        # top_frame.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
+        #top_frame = tk.Frame(self.root)
+        #top_frame.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
         # 
-        # tk.Button(top_frame, text="Nouveau", command=self.new_graph).pack(side=tk.LEFT)
-        # tk.Button(top_frame, text="Charger", command=self.load_graph).pack(side=tk.LEFT)
-        # tk.Button(top_frame, text="Sauver", command=self.save_graph).pack(side=tk.LEFT)
+        #tk.Button(top_frame, text="Nouveau", command=self.new_graph).pack(side=tk.LEFT)
+        #tk.Button(top_frame, text="Charger", command=self.load_graph).pack(side=tk.LEFT)
+        #tk.Button(top_frame, text="Sauver", command=self.save_graph).pack(side=tk.LEFT)
         # ...
         
         pass
@@ -65,9 +65,18 @@ class GraphExplorerApp:
     
     def load_graph(self):
         """Charge un graphe depuis un fichier JSON."""
-        # TODO: implémenter
-        # Astuce : utiliser filedialog.askopenfilename()
-        pass
+        chemin=filedialog.askopenfilename(
+        defaultextension=".json",       #Defini le type du fichier à importer par défaut
+        filetypes=[("Fichier JSON", "*.json")],
+        title="Charger un Graph",
+        )
+
+        if chemin:
+            try:
+                self.graph=load_graph(chemin)   #Utilise la fonction load_graph de src\app\core\io.py pour charger
+                messagebox.showinfo("Succès", "Fichier chargé avec succès !")   #Affiche la réussite du chargement d'un fichier
+            except Exception as e:
+                messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
     
     def save_graph(self):
         """Sauvegarde le graphe actuel en JSON."""
@@ -81,7 +90,7 @@ class GraphExplorerApp:
         if chemin:
             try:
                 save_graph(self.graph, chemin)                              #Utilise la fonction savegraph de src\app\core\io.py pour enregistrer
-                messagebox.showinfo("Succès", "Fichier enregistré !")       #Affiche la réussite de l'enregistrement
+                messagebox.showinfo("Succès", "Fichier enregistré avec succès !")       #Affiche la réussite de l'enregistrement
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))                      #Affiche l'échec lors de l'enregistrement
     

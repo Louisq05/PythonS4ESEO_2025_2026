@@ -36,7 +36,7 @@ class PageAccueil(Frame):
         self.canvas.pack(fill="both", expand=True)
 
         # Référence image de fond
-        self.bg = PhotoImage(file="page_rumeur.png")
+        self.bg = PhotoImage(file="test tkinter\page_rumeur.png")
 
         # Image de fond
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
@@ -83,12 +83,12 @@ class Page2(Frame):
     def __init__(self, parent, controller):
 
         super().__init__(parent)
-        self.controller = controller   # ✅ IMPORTANT
+        self.controller = controller
 
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
-        self.bg = PhotoImage(file="page_rumeur.png")
+        self.bg = PhotoImage(file="test tkinter\page_rumeur.png")
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         self.canvas.create_text(
@@ -105,7 +105,7 @@ class Page2(Frame):
         # Création 5 lignes x 2 colonnes
         for row in range(5):
             for col in range(2):
-                index = row * 2 + col   # ✅ calcul correct
+                index = row * 2 + col
 
                 btn = ttk.Button(
                     grid_frame,

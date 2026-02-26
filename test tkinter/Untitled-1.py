@@ -126,7 +126,7 @@ class Page2(Frame):
             .place(relx=0.95, rely=0.05, anchor="center")
 
     def choisir_personne(self, index):
-        print("Bouton choisi :", self.noms[index])
+        print("Bouton n°",index, ", nom :", self.noms[index])
 
         self.controller.personne_choisie = index
         self.controller.show_frame(PageAccueil)

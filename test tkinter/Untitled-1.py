@@ -1,5 +1,19 @@
 from tkinter import *
 from tkinter import ttk
+from random import randint 
+
+rumeurs = ["M. Boubaker est en réalité marié à une serveillante de l’Eseo, et il ont des enfants ensemble dans le secret.",
+"Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.", 
+"Chaque soir sont organisé des soirées par M. Valée dans le sous-sol de l’Eseo.", 
+"M. Trenchant prépare un contrôle surprise en physique quantique.", 
+"Loan à gagné à l’euro millon et prévoit de racheter le batiment de l’Eseo.", 
+"M. Schlinquer imprime des armes en 3d dans le lab de l’eseo.”, “Nils s’appelle en réalité Nelson.", 
+"Tristant s’appelle en réalité Kristian.”, “Nils entretient une relation avec une caintinière du RU.", 
+"Chloé Jarrousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.", 
+"Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.",
+"Cyril Vallée passe les vacances d’été sur un yatch financé par l’eseo."]
+
+print(rumeurs[randint(0, len(rumeurs))])
 
 class App(Tk):
     def __init__(self):

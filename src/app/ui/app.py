@@ -5,11 +5,11 @@ Fenêtre principale de l'application Tkinter.
 
 Palier F - Séances 6-8.
 """
-
+from tkinter import *
 import tkinter as tk
 from tkinter import messagebox, filedialog, simpledialog
 from ..core import Graph,save_graph,load_graph
-
+from .interface import App,PageAccueil,Page2
 
 class GraphExplorerApp:
     """
@@ -22,16 +22,15 @@ class GraphExplorerApp:
     - Sauvegarder le graphe
     """
     
-    def __init__(self, root: tk.Tk):
+    def __init__(self):
         """
         Initialise l'application.
         
         Args:
             root: Fenêtre racine Tkinter
         """
-        self.root = root
-        self.root.title("Explorateur de Graphes - ESEO S4")
-        screen_width = self.root.winfo_screenwidth()
+
+        """screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
 
         width = int(screen_width * 0.8)
@@ -40,13 +39,15 @@ class GraphExplorerApp:
         x = (screen_width - width) // 2
         y = (screen_height - height) // 2
 
-        self.root.geometry(f"{width}x{height}+{x}+{y}")
+        self.root.geometry(f"{width}x{height}+{x}+{y}")"""
         
         # Graphe actuel
         self.graph = Graph()
         
         # Configuration de l'interface
-        self._setup_ui()
+        #self._setup_ui()
+        self.app = App()
+        self.app.mainloop()
     
     def _setup_ui(self):
         """Configure tous les widgets de l'interface."""
@@ -205,9 +206,7 @@ class GraphExplorerApp:
 
 def main():
     """Point d'entrée de l'application."""
-    root = tk.Tk()
-    app = GraphExplorerApp(root)
-    root.mainloop()
+    app = GraphExplorerApp()
 
 
 if __name__ == "__main__":

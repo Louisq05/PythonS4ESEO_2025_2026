@@ -160,6 +160,11 @@ class Page3(Frame):
         ttk.Button(self, text="Aller à la page 1",
                    command=lambda: controller.show_frame(PageAccueil))\
             .place(relx=0.5, rely=0.9, anchor="center")
+        
+        # Bouton pour faire apparaitre le cercle
+        ttk.Button(self, text="Aller à la page 1",
+                   command=lambda: controller.show_frame(PageAccueil))\
+            .place(relx=0.5, rely=0.9, anchor="center")
 
         # Quitter
         ttk.Button(self, text="Quit",
@@ -167,10 +172,10 @@ class Page3(Frame):
             .place(relx=0.95, rely=0.05, anchor="center")
 
         # Cercle
-        self._add_circle(relx=0.5, rely=0.5, radius=10, color="#E74C3C", text="!")
+        self._add_circle(relx=0.5, rely=0.5)
 
     # Fonction pour créer un cercle 
-    def _add_circle(self, relx=0.5, rely=0.5, radius=35, color="#E74C3C", outline="#ffffff", text="", text_color="white"): # Choisir les couleurs
+    def _add_circle(self, relx=0.5, rely=0.5, radius=10, color="#E74C3C", outline="#ffffff", text="!", text_color="white"): # Choisir les couleurs
         """Dessine un cercle sur le canvas principal."""
 
         x = int(relx * 1024)
@@ -178,12 +183,24 @@ class Page3(Frame):
 
         self.canvas.create_oval(x - radius, y - radius,
                                 x + radius, y + radius,
-                                fill=color, outline=outline, width=2)   # Choisir l'épaisseur du contour
+                                fill=color, outline=outline, width=2, state="hidden")   # Choisir l'épaisseur du contour
         
         if text:
             self.canvas.create_text(x, y, text=text,
                                     fill=text_color,
-                                    font=("Arial", 12, "bold"))         # Choix du text
+                                    font=("Arial", 12, "bold"), state="hidden")         # Choix du text
+            
+
+
+    def show_circle(self):
+        self.canvas.itemconfigure(self.circle_id, state="normal")
+        if hasattr(self, "circle_text_id"):
+            self.canvas.itemconfigure(self.circle_text_id, state="normal")
+
+    def hide_circle(self):
+        self.canvas.itemconfigure(self.circle_id, state="hidden")
+        if hasattr(self, "circle_text_id"):
+            self.canvas.itemconfigure(self.circle_text_id, state="hidden")
 
 if __name__ == "__main__":
     app = App()

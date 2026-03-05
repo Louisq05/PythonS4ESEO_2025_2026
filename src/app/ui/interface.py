@@ -29,7 +29,7 @@ class App(Tk):
 
         self.frames = {}
 
-        for F in (PageAccueil, Page2):
+        for F in (PageAccueil, Page2, Page3):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -156,29 +156,6 @@ class Page3(Frame):
         self.bg = PhotoImage(file="src\\app\\ui\\page_rumeur.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
-        self.canvas.create_text(
-            512, 100,
-            text="A qui voulez-vous en parler ?",
-            font=("Helvetica", 30, "bold"),
-            fill="black"
-        )
-
-        # Frame pour la grille
-        grid_frame = Frame(self)
-        self.canvas.create_window(512, 320, window=grid_frame)
-
-        # Création 5 lignes x 2 colonnes
-        for row in range(5):
-            for col in range(2):
-                index = row * 2 + col
-
-                btn = ttk.Button(
-                    grid_frame,
-                    text=self.noms[index],
-                    command=lambda i=index: self.choisir_personne(i),
-                    width=30
-                )
-                btn.grid(row=row, column=col, padx=10, pady=10)
 
         # Bouton retour
         ttk.Button(self, text="Aller à la page 1",

@@ -153,7 +153,7 @@ class Page3(Frame):
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
-        self.bg = PhotoImage(file="src\\app\\ui\\page_rumeur.png", master=self.canvas)
+        self.bg = PhotoImage(file="src\\app\\ui\\batiment Eseo 1.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
 

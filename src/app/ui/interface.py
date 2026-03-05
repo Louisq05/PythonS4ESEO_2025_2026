@@ -156,7 +156,6 @@ class Page3(Frame):
         self.bg = PhotoImage(file="src\\app\\ui\\batiment Eseo 1.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
-
         # Bouton retour
         ttk.Button(self, text="Aller à la page 1",
                    command=lambda: controller.show_frame(PageAccueil))\
@@ -167,11 +166,24 @@ class Page3(Frame):
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
 
-    def choisir_personne(self, index):
-        print("Bouton choisi :", self.noms[index])
+        # Cercle
+        self._add_circle(relx=0.5, rely=0.5, radius=10, color="#E74C3C", text="!")
 
-        self.controller.personne_choisie = index
-        self.controller.show_frame(PageAccueil)
+    # Fonction pour créer un cercle 
+    def _add_circle(self, relx=0.5, rely=0.5, radius=35, color="#E74C3C", outline="#ffffff", text="", text_color="white"): # Choisir les couleurs
+        """Dessine un cercle sur le canvas principal."""
+
+        x = int(relx * 1024)
+        y = int(rely * 608)
+
+        self.canvas.create_oval(x - radius, y - radius,
+                                x + radius, y + radius,
+                                fill=color, outline=outline, width=2)   # Choisir l'épaisseur du contour
+        
+        if text:
+            self.canvas.create_text(x, y, text=text,
+                                    fill=text_color,
+                                    font=("Arial", 12, "bold"))         # Choix du text
 
 if __name__ == "__main__":
     app = App()

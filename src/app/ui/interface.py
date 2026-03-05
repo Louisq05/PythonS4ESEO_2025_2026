@@ -11,10 +11,17 @@ rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo,
 "Tristant s’appelle en réalité Kristian.","Nils entretient une relation avec une caintinière du RU.", 
 "Chloé Jarrousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.", 
 "Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.",
-"Cyril Vallée passe les vacances d’été sur un yatch financé par l’eseo."]
-
-concernés = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
-
+"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo."]
+concernés_lst = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
+concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475,"id":None},
+                "Victor":{"name":"Victor","x":0.7,"y":0.6,"id":None},
+                "M. Valée":{"name":"M. Valée","x":None,"y":None,"id":None},
+                "M. Trenchant":{"name":"M. Trenchant","x":None,"y":None,"id":None},
+                "Loan":{"name":"Loan","x":0.7,"y":0.6,"id":None},
+                "M. Schlinquer":{"name":"M. Schlinquer","x":None,"y":None,"id":None},
+                "Nils":{"name":"Nils","x":0.7,"y":0.6,"id":None},
+                "Tristan":{"name":"Tristan","x":0.7,"y":0.6,"id":None},
+                "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":None,"y":None,"id":None}}                
 class App(Tk):
     def __init__(self):
         super().__init__()
@@ -175,7 +182,9 @@ class Page3(Frame):
             .place(relx=0.95, rely=0.05, anchor="center")
 
         # Cercle
-        self._add_circle(relx=0.5, rely=0.5)
+        self._add_circle(relx=0.5, rely=0.475)
+
+
 
     # Fonction pour créer un cercle 
     def _add_circle(self, relx=0.5, rely=0.5, radius=10, color="#E74C3C", outline="#ffffff", text="!", text_color="white"): # Choisir les couleurs
@@ -186,12 +195,12 @@ class Page3(Frame):
 
         self.canvas.create_oval(x - radius, y - radius,
                                 x + radius, y + radius,
-                                fill=color, outline=outline, width=2, state="hidden")   # Choisir l'épaisseur du contour
+                                fill=color, outline=outline, width=2, state="normal")   # Choisir l'épaisseur du contour
         
         if text:
             self.canvas.create_text(x, y, text=text,
                                     fill=text_color,
-                                    font=("Arial", 12, "bold"), state="hidden")         # Choix du text
+                                    font=("Arial", 12, "bold"), state="normal")         # Choix du text
             
 
 

@@ -1,6 +1,14 @@
 from tkinter import *
 from tkinter import ttk
 from random import choice
+import os
+
+# Détection de l'OS
+if os.name == "nt":   # Windows
+    IMAGE_PATH = "src\\app\\ui\\"
+else:                 # Mac / Linux
+    IMAGE_PATH = "src/app/ui/"
+
 
 rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo, et il ont des enfants ensemble dans le secret.",
 "Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.", 
@@ -65,7 +73,7 @@ class PageAccueil(Frame):
         self.canvas.pack(fill="both", expand=True)
 
         # Référence image de fond
-        self.bg = PhotoImage(file="src\\app\\ui\\page_rumeur.png", master=self.canvas)
+        self.bg = PhotoImage(file=IMAGE_PATH + "page_rumeur.png", master=self.canvas)
 
         # Image de fond
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
@@ -119,7 +127,7 @@ class Page2(Frame):
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
-        self.bg = PhotoImage(file="src\\app\\ui\\page_rumeur.png", master=self.canvas)
+        self.bg = PhotoImage(file=IMAGE_PATH + "page_rumeur.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         self.canvas.create_text(
@@ -171,7 +179,7 @@ class Page3(Frame):
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
-        self.bg = PhotoImage(file="src\\app\\ui\\batiment Eseo 1.png", master=self.canvas)
+        self.bg = PhotoImage(file=IMAGE_PATH + "batiment Eseo 1.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         # Bouton retour

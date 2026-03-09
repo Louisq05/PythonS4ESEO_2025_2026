@@ -12,16 +12,24 @@ rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo,
 "Chloé Jarrousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.", 
 "Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.",
 "M. Vallée passe les vacances d’été sur un yatch financé par l’eseo."]
+
 concernés_lst = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
 concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475,"id":None},
-                "Victor":{"name":"Victor","x":0.7,"y":0.6,"id":None},
-                "M. Valée":{"name":"M. Valée","x":None,"y":None,"id":None},
-                "M. Trenchant":{"name":"M. Trenchant","x":None,"y":None,"id":None},
-                "Loan":{"name":"Loan","x":0.7,"y":0.6,"id":None},
-                "M. Schlinquer":{"name":"M. Schlinquer","x":None,"y":None,"id":None},
-                "Nils":{"name":"Nils","x":0.7,"y":0.6,"id":None},
-                "Tristan":{"name":"Tristan","x":0.7,"y":0.6,"id":None},
-                "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":None,"y":None,"id":None}}                
+                "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6,"id":None},
+                "M. Valée":{"name":"M. Valée","x":0.375,"y":0.475,"id":None},
+                "M. Trenchant":{"name":"M. Trenchant","x":0.35,"y":0.6,"id":None},
+                "Loan Bouyahi":{"name":"Loan Bouyahi","x":0.7,"y":0.6,"id":None},
+                "M. Schlinquer":{"name":"M. Schlinquer","x":0.6,"y":0.8,"id":None},
+                "Nils Coudry":{"name":"Nils Coudry","x":0.7,"y":0.6,"id":None},
+                "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98,"id":None},
+                "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":None,"y":0.475,"id":None},
+                "Emilie Louberssac":{"name":"Emilie Louberssac","x":0.4,"y":0.75,"id":None},
+                "Isabelle Hoerner":{"name":"Isabelle Hoerner","x":0.46,"y":0.475,"id":None},
+                "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75,"id":None},
+                "Matheo Nicol":{"name":"Matheo Nicol","x":0.98,"y":0.85,"id":None},
+                "Arthur Kempnich":{"name":"Arthur Kempnich","x":0.5,"y":0.56,"id":None},
+                "Yanis Mary":{"name":"Yanis Mary","x":0.675,"y":0.75,"id":None}}                
+
 class App(Tk):
     def __init__(self):
         super().__init__()
@@ -96,7 +104,7 @@ class PageAccueil(Frame):
 class Page2(Frame):
     # Liste des noms
     noms = [
-        "M. Boubaker", "Loubersac Emilie",
+        "M. Boubaker", "Louberssac Emilie",
         "Hoerner Isabelle", "Kempnich Arthur",
         "Trenchant Vincent", "Matteo Aillet",
         "Gechi Justin", "Vallée Cyril",
@@ -180,10 +188,6 @@ class Page3(Frame):
         ttk.Button(self, text="Quit",
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
-
-        # Cercle
-        self._add_circle(relx=0.5, rely=0.475)
-
 
 
     # Fonction pour créer un cercle 

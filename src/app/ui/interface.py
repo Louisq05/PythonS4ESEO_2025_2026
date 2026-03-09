@@ -115,7 +115,7 @@ class Page2(Frame):
         "M. Boubaker", "Louberssac Emilie",
         "Hoerner Isabelle", "Kempnich Arthur",
         "Trenchant Vincent", "Matteo Aillet",
-        "Gechi Justin", "Vallée Cyril",
+        "Guechi Justin", "Vallée Cyril",
         "Nicol Matheo", "Mary Yanis"
     ]
     

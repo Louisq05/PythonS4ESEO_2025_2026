@@ -23,20 +23,21 @@ rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo,
 
 concernés_lst = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
 concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475,"id":None},
-                "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6,"id":None},
-                "M. Valée":{"name":"M. Valée","x":0.375,"y":0.475,"id":None},
+                "Emilie Louberssac":{"name":"Emilie Louberssac","x":0.4,"y":0.75,"id":None},
+                "Isabelle Hoerner":{"name":"Isabelle Hoerner","x":0.46,"y":0.475,"id":None},
+                "Arthur Kempnich":{"name":"Arthur Kempnich","x":0.5,"y":0.56,"id":None},
                 "M. Trenchant":{"name":"M. Trenchant","x":0.35,"y":0.6,"id":None},
+                "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75,"id":None},
+                "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":0.35,"y":0.475,"id":None},
+                "M. Valée":{"name":"M. Valée","x":0.375,"y":0.475,"id":None},
+                "Matheo Nicol":{"name":"Matheo Nicol","x":0.98,"y":0.85,"id":None},
+                "Yanis Mary":{"name":"Yanis Mary","x":0.675,"y":0.75,"id":None},
+                "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6,"id":None},
                 "Loan Bouyahi":{"name":"Loan Bouyahi","x":0.7,"y":0.6,"id":None},
                 "M. Schlinquer":{"name":"M. Schlinquer","x":0.6,"y":0.8,"id":None},
                 "Nils Coudry":{"name":"Nils Coudry","x":0.7,"y":0.6,"id":None},
-                "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98,"id":None},
-                "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":None,"y":0.475,"id":None},
-                "Emilie Louberssac":{"name":"Emilie Louberssac","x":0.4,"y":0.75,"id":None},
-                "Isabelle Hoerner":{"name":"Isabelle Hoerner","x":0.46,"y":0.475,"id":None},
-                "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75,"id":None},
-                "Matheo Nicol":{"name":"Matheo Nicol","x":0.98,"y":0.85,"id":None},
-                "Arthur Kempnich":{"name":"Arthur Kempnich","x":0.5,"y":0.56,"id":None},
-                "Yanis Mary":{"name":"Yanis Mary","x":0.675,"y":0.75,"id":None}}                
+                "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98,"id":None}
+                }                
 
 class App(Tk):
     def __init__(self):
@@ -52,7 +53,6 @@ class App(Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-
         for F in (PageAccueil, Page2, Page3):
             frame = F(container, self)
             self.frames[F] = frame
@@ -115,7 +115,7 @@ class Page2(Frame):
         "M. Boubaker", "Louberssac Emilie",
         "Hoerner Isabelle", "Kempnich Arthur",
         "Trenchant Vincent", "Matteo Aillet",
-        "Guechi Justin", "Vallée Cyril",
+        "Chloé Jarousseau", "Vallée Cyril",
         "Nicol Matheo", "Mary Yanis"
     ]
     
@@ -196,7 +196,9 @@ class Page3(Frame):
         ttk.Button(self, text="Quit",
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
-
+        
+        self._create_circle()
+        self.show_circle(5)
 
     # Fonction pour créer un cercle 
     def _add_circle(self, relx=0.5, rely=0.5, radius=10, color="#E74C3C", outline="#ffffff", text="!", text_color="white"): # Choisir les couleurs
@@ -207,25 +209,33 @@ class Page3(Frame):
 
         self.canvas.create_oval(x - radius, y - radius,
                                 x + radius, y + radius,
-                                fill=color, outline=outline, width=2, state="normal")   # Choisir l'épaisseur du contour
+                                fill=color, outline=outline, width=2, state="hidden")   # Choisir l'épaisseur du contour
         
         if text:
             self.canvas.create_text(x, y, text=text,
                                     fill=text_color,
-                                    font=("Arial", 12, "bold"), state="normal")         # Choix du text
+                                    font=("Arial", 12, "bold"), state="hidden")         # Choix du text
             
-
-
-    def show_circle(self):
-        self.canvas.itemconfigure(self.circle_id, state="normal")
+    def _create_circle(self):
+        self.concernés=concernés_dict
+        i=0
+        for k,v in self.concernés.items():
+           
+            print(v["x"],v["y"]) 
+            self._add_circle(relx=v["x"],rely=v["y"])
+            self.concernés[k]["id"]=i
+            i+=1
+    
+    def show_circle(self,circle_id):
+        self.canvas.itemconfigure(circle_id, state="normal")
         if hasattr(self, "circle_text_id"):
-            self.canvas.itemconfigure(self.circle_text_id, state="normal")
+            self.canvas.itemconfigure(circle_id, state="normal")
 
-    def hide_circle(self):
-        self.canvas.itemconfigure(self.circle_id, state="hidden")
+    def hide_circle(self,circle_id):
+        self.canvas.itemconfigure(circle_id, state="hidden")
         if hasattr(self, "circle_text_id"):
-            self.canvas.itemconfigure(self.circle_text_id, state="hidden")
-
+            self.canvas.itemconfigure(circle_id, state="hidden")
+    
 if __name__ == "__main__":
     app = App()
     app.mainloop()

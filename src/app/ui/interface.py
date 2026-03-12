@@ -196,9 +196,9 @@ class Page3(Frame):
         ttk.Button(self, text="Quit",
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
-        
+        self.concernés=concernés_dict
         self._create_circle()
-        self.show_circle(5)
+        self.show_circle(self.concernés["Isabelle Hoerner"]["id"])
 
     # Fonction pour créer un cercle 
     def _add_circle(self, relx=0.5, rely=0.5, radius=10, color="#E74C3C", outline="#ffffff", text="!", text_color="white"): # Choisir les couleurs
@@ -217,11 +217,8 @@ class Page3(Frame):
                                     font=("Arial", 12, "bold"), state="hidden")         # Choix du text
             
     def _create_circle(self):
-        self.concernés=concernés_dict
         i=0
         for k,v in self.concernés.items():
-           
-            print(v["x"],v["y"]) 
             self._add_circle(relx=v["x"],rely=v["y"])
             self.concernés[k]["id"]=i
             i+=1

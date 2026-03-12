@@ -220,6 +220,7 @@ class Page3(Frame):
     def _create_circle(self):
         self.concernés=concernés_dict
         i=0
+        print("Création des cerlces : ")
         for k,v in self.concernés.items():
            
             print(v["x"],v["y"]) 

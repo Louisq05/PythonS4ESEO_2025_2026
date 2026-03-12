@@ -9,6 +9,7 @@ if os.name == "nt":   # Windows
 else:                 # Mac / Linux
     IMAGE_PATH = "src/app/ui/"
 
+button = None
 
 rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo, et il ont des enfants ensemble dans le secret.",
 "Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.", 
@@ -166,8 +167,8 @@ class Page2(Frame):
 
     def choisir_personne(self, index):
         print("Bouton choisi :", self.noms[index])
-        self.controller.personne_choisie = index
         self.controller.show_frame(Page3)
+        button = index
 
 class Page3(Frame):
     

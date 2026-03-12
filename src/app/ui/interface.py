@@ -40,6 +40,8 @@ concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
                 "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98}
                 }                
 
+bouton = None
+
 class App(Tk):
     def __init__(self):
         super().__init__()
@@ -54,20 +56,21 @@ class App(Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (PageAccueil, Page2, Page3):
+        for F in (Page1, Page2, Page3):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(PageAccueil)
+        self.show_frame(Page1)
 
     def show_frame(self, page):
         frame = self.frames[page]
         frame.tkraise()
 
 
-class PageAccueil(Frame):
+class Page1(Frame):
     def __init__(self, parent, controller):
+        print("page1")
         super().__init__(parent)
 
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
@@ -112,6 +115,7 @@ class PageAccueil(Frame):
 
 class Page2(Frame):
     # Liste des noms
+    print("page2")
     noms = [
         "M. Boubaker", "Louberssac Emilie",
         "Hoerner Isabelle", "Kempnich Arthur",
@@ -157,7 +161,7 @@ class Page2(Frame):
 
         # Bouton retour
         ttk.Button(self, text="Aller à la page 1",
-                   command=lambda: controller.show_frame(PageAccueil))\
+                   command=lambda: controller.show_frame(Page1))\
             .place(relx=0.5, rely=0.9, anchor="center")
 
         # Quitter
@@ -165,14 +169,17 @@ class Page2(Frame):
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
 
+
     def choisir_personne(self, index):
         print("Bouton choisi :", self.noms[index])
         self.controller.show_frame(Page3)
-        button = index
+        global bouton
+        bouton = self.noms[index]
 
 class Page3(Frame):
     
     def __init__(self, parent, controller):
+        print("page3")
 
         super().__init__(parent)
         self.controller = controller
@@ -185,12 +192,12 @@ class Page3(Frame):
 
         # Bouton retour
         ttk.Button(self, text="Aller à la page 1",
-                   command=lambda: controller.show_frame(PageAccueil))\
+                   command=lambda: controller.show_frame(Page1))\
             .place(relx=0.5, rely=0.9, anchor="center")
         
         # Bouton pour faire apparaitre le cercle
         ttk.Button(self, text="Aller à la page 1",
-                   command=lambda: controller.show_frame(PageAccueil))\
+                   command=lambda: controller.show_frame(Page1))\
             .place(relx=0.5, rely=0.9, anchor="center")
 
         # Quitter
@@ -199,8 +206,10 @@ class Page3(Frame):
             .place(relx=0.95, rely=0.05, anchor="center")
         self.concernés=concernés_dict
         self._create_circle()
-        for k,v in self.concernés.items():
-            self.show_circle(self.concernés[k]["circle_id"],self.concernés[k]["text_id"])
+        if button is not None :
+            self.apparaitre()
+        else :
+            print("to soon")
 
     # Fonction pour créer un cercle 
     def _add_circle(self, relx=0.5, rely=0.5, radius=10, color="#E74C3C", outline="#ffffff", text="!", text_color="white"): # Choisir les couleurs
@@ -231,7 +240,18 @@ class Page3(Frame):
     def hide_circle(self,circle_id,text_id):
         self.canvas.itemconfigure(circle_id, state="hidden")
         self.canvas.itemconfigure(text_id, state="hidden")
-    
+
+    def apparaitre(self):
+        if bouton is not None :
+            self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
+        else :
+            print(bouton)
+
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+
+    """
+    Idée pour la suite :
+    créer les boutons DFS BFS qui apparaitront au debut de page3
+    attendre qu'on clique pour déclencher l'apparition du premier cercle"""

@@ -23,21 +23,21 @@ rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo,
 "M. Vallée passe les vacances d’été sur un yatch financé par l’eseo."]
 
 concernés_lst = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
-concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475,"id":None},
-                "Emilie Louberssac":{"name":"Emilie Louberssac","x":0.4,"y":0.75,"id":None},
-                "Isabelle Hoerner":{"name":"Isabelle Hoerner","x":0.46,"y":0.475,"id":None},
-                "Arthur Kempnich":{"name":"Arthur Kempnich","x":0.5,"y":0.56,"id":None},
-                "M. Trenchant":{"name":"M. Trenchant","x":0.35,"y":0.6,"id":None},
-                "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75,"id":None},
-                "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":0.35,"y":0.475,"id":None},
-                "M. Valée":{"name":"M. Valée","x":0.375,"y":0.475,"id":None},
-                "Matheo Nicol":{"name":"Matheo Nicol","x":0.98,"y":0.85,"id":None},
-                "Yanis Mary":{"name":"Yanis Mary","x":0.675,"y":0.75,"id":None},
-                "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6,"id":None},
-                "Loan Bouyahi":{"name":"Loan Bouyahi","x":0.7,"y":0.6,"id":None},
-                "M. Schlinquer":{"name":"M. Schlinquer","x":0.6,"y":0.8,"id":None},
-                "Nils Coudry":{"name":"Nils Coudry","x":0.7,"y":0.6,"id":None},
-                "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98,"id":None}
+concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
+                "Emilie Louberssac":{"name":"Emilie Louberssac","x":0.4,"y":0.75},
+                "Isabelle Hoerner":{"name":"Isabelle Hoerner","x":0.46,"y":0.475},
+                "Arthur Kempnich":{"name":"Arthur Kempnich","x":0.5,"y":0.56},
+                "M. Trenchant":{"name":"M. Trenchant","x":0.35,"y":0.6},
+                "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75},
+                "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":0.35,"y":0.475},
+                "M. Valée":{"name":"M. Valée","x":0.375,"y":0.475},
+                "Matheo Nicol":{"name":"Matheo Nicol","x":0.98,"y":0.85},
+                "Yanis Mary":{"name":"Yanis Mary","x":0.675,"y":0.75},
+                "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6},
+                "Loan Bouyahi":{"name":"Loan Bouyahi","x":0.7,"y":0.6},
+                "M. Schlinquer":{"name":"M. Schlinquer","x":0.6,"y":0.8},
+                "Nils Coudry":{"name":"Nils Coudry","x":0.7,"y":0.6},
+                "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98}
                 }                
 
 class App(Tk):
@@ -226,13 +226,11 @@ class Page3(Frame):
     
     def show_circle(self,circle_id,text_id):
         self.canvas.itemconfigure(circle_id, state="normal")
-        if hasattr(self, "circle_text_id"):
-            self.canvas.itemconfigure(text_id, state="normal")
+        self.canvas.itemconfigure(text_id, state="normal")
 
     def hide_circle(self,circle_id,text_id):
         self.canvas.itemconfigure(circle_id, state="hidden")
-        if hasattr(self, "circle_text_id"):
-            self.canvas.itemconfigure(text_id, state="hidden")
+        self.canvas.itemconfigure(text_id, state="hidden")
     
 if __name__ == "__main__":
     app = App()

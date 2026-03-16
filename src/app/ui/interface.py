@@ -190,15 +190,14 @@ class Page3(Frame):
         self.bg = PhotoImage(file=IMAGE_PATH + "batiment Eseo 1.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
-        # Bouton retour
-        ttk.Button(self, text="Aller à la page 1",
-                   command=lambda: controller.show_frame(Page1))\
-            .place(relx=0.5, rely=0.9, anchor="center")
-        
-        # Bouton pour faire apparaitre le cercle
-        ttk.Button(self, text="Aller à la page 1",
-                   command=lambda: controller.show_frame(Page1))\
-            .place(relx=0.5, rely=0.9, anchor="center")
+        # BFS
+        ttk.Button(self, text="BFS",
+                   command=lambda: controller.show_frame(Page2))\
+            .place(relx=0.45, rely=0.9, anchor="center")
+        # DFS
+        ttk.Button(self, text="BFS",
+                   command=lambda: controller.show_frame(Page2))\
+            .place(relx=0.55, rely=0.9, anchor="center")
 
         # Quitter
         ttk.Button(self, text="Quit",

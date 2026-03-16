@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from random import choice
 import os
+from ..core import Graph
 
 # Détection de l'OS
 if os.name == "nt":   # Windows
@@ -24,15 +25,15 @@ rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo,
 
 concernés_lst = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
 concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
-                "Emilie Louberssac":{"name":"Emilie Louberssac","x":0.4,"y":0.75},
-                "Isabelle Hoerner":{"name":"Isabelle Hoerner","x":0.46,"y":0.475},
-                "Arthur Kempnich":{"name":"Arthur Kempnich","x":0.5,"y":0.56},
+                "Louberssac Emilie":{"name":"Louberssac Emilie","x":0.4,"y":0.75},
+                "Hoerner Isabelle":{"name":"Hoerner Isabelle","x":0.46,"y":0.475},
+                "Kempnich Arthur":{"name":"Kempnich Arthur","x":0.5,"y":0.56},
                 "M. Trenchant":{"name":"M. Trenchant","x":0.35,"y":0.6},
                 "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75},
                 "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":0.35,"y":0.475},
                 "M. Valée":{"name":"M. Valée","x":0.375,"y":0.475},
-                "Matheo Nicol":{"name":"Matheo Nicol","x":0.98,"y":0.85},
-                "Yanis Mary":{"name":"Yanis Mary","x":0.675,"y":0.75},
+                "Nicol Matheo":{"name":"Nicol Matheo","x":0.98,"y":0.85},
+                "Mary Yanis":{"name":"Mary Yanis","x":0.675,"y":0.75},
                 "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6},
                 "Loan Bouyahi":{"name":"Loan Bouyahi","x":0.7,"y":0.6},
                 "M. Schlinquer":{"name":"M. Schlinquer","x":0.6,"y":0.8},
@@ -119,8 +120,8 @@ class Page2(Frame):
     noms = [
         "M. Boubaker", "Louberssac Emilie",
         "Hoerner Isabelle", "Kempnich Arthur",
-        "Trenchant Vincent", "Matteo Aillet",
-        "Chloé Jarousseau", "Vallée Cyril",
+        "M. Trenchant", "Matteo Aillet",
+        "Chloé Jarousseau", "M. Valée",
         "Nicol Matheo", "Mary Yanis"
     ]
     
@@ -192,11 +193,11 @@ class Page3(Frame):
 
         # BFS
         ttk.Button(self, text="BFS",
-                   command=lambda: controller.show_frame(Page2))\
+                   command=lambda: self.run_bfs())\
             .place(relx=0.45, rely=0.9, anchor="center")
         # DFS
-        ttk.Button(self, text="BFS",
-                   command=lambda: controller.show_frame(Page2))\
+        ttk.Button(self, text="DFS",
+                   command=lambda: self.run_dfs())\
             .place(relx=0.55, rely=0.9, anchor="center")
 
         # Quitter
@@ -204,11 +205,8 @@ class Page3(Frame):
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
         self.concernés=concernés_dict
+        self.graph=Graph()
         self._create_circle()
-        if button is not None :
-            self.apparaitre()
-        else :
-            print("to soon")
 
     # Fonction pour créer un cercle 
     def _add_circle(self, relx=0.5, rely=0.5, radius=10, color="#E74C3C", outline="#ffffff", text="!", text_color="white"): # Choisir les couleurs
@@ -240,11 +238,11 @@ class Page3(Frame):
         self.canvas.itemconfigure(circle_id, state="hidden")
         self.canvas.itemconfigure(text_id, state="hidden")
 
-    def apparaitre(self):
-        if bouton is not None :
-            self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
-        else :
-            print(bouton)
+    def run_dfs(self):
+        self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
+
+    def run_bfs(self):
+        self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
 
 if __name__ == "__main__":
     app = App()

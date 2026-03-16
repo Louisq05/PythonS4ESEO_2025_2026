@@ -9,7 +9,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter import messagebox, filedialog, simpledialog
 from ..core import Graph,save_graph,load_graph
-from .interface import App,PageAccueil,Page2
+from .interface import App,Page2,Page3
 
 class GraphExplorerApp:
     """

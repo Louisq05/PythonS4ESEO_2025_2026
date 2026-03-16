@@ -2,7 +2,8 @@ from tkinter import *
 from tkinter import ttk
 from random import choice
 import os
-from ..core import Graph
+from ..core import Graph,save_graph,load_graph
+from tkinter import messagebox
 
 # Détection de l'OS
 if os.name == "nt":   # Windows
@@ -207,7 +208,7 @@ class Page3(Frame):
             .place(relx=0.95, rely=0.05, anchor="center")
         
         self.concernés=concernés_dict
-        self.graph=Graph()
+        self.init_graph()
         self._create_circle()
 
     # Fonction pour créer un cercle 
@@ -255,6 +256,15 @@ class Page3(Frame):
         self.btn_dfs.place_forget()
         self.btn_bfs.place_forget()
         self.run_bfs()
+    
+    def init_graph(self):
+        chemin=IMAGE_PATH+"graph.json"
+        if chemin:
+            try:
+                self.graph=load_graph(chemin)   #Utilise la fonction load_graph de src\app\core\io.py pour charger
+                messagebox.showinfo("Succès", "Fichier chargé avec succès !")   #Affiche la réussite du chargement d'un fichier
+            except Exception as e:
+                messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
 
 if __name__ == "__main__":
     app = App()

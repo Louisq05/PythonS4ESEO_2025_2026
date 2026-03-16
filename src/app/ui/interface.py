@@ -191,19 +191,21 @@ class Page3(Frame):
         self.bg = PhotoImage(file=IMAGE_PATH + "batiment Eseo 1.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
-        # BFS
-        ttk.Button(self, text="BFS",
-                   command=lambda: self.run_bfs())\
-            .place(relx=0.45, rely=0.9, anchor="center")
         # DFS
-        ttk.Button(self, text="DFS",
-                   command=lambda: self.run_dfs())\
-            .place(relx=0.55, rely=0.9, anchor="center")
+        self.btn_dfs = ttk.Button(self, text="DFS",
+                    command=lambda: self.on_dfs_click())
+        self.btn_dfs.place(relx=0.55, rely=0.9, anchor="center")
+
+        # BFS
+        self.btn_bfs = ttk.Button(self, text="BFS",
+                    command=lambda: self.on_bfs_click())
+        self.btn_bfs.place(relx=0.45, rely=0.9, anchor="center")
 
         # Quitter
         ttk.Button(self, text="Quit",
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
+        
         self.concernés=concernés_dict
         self.graph=Graph()
         self._create_circle()
@@ -243,6 +245,16 @@ class Page3(Frame):
 
     def run_bfs(self):
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
+
+    def on_dfs_click(self):
+        self.btn_dfs.place_forget()
+        self.btn_bfs.place_forget()
+        self.run_dfs()
+
+    def on_bfs_click(self):
+        self.btn_dfs.place_forget()
+        self.btn_bfs.place_forget()
+        self.run_bfs()
 
 if __name__ == "__main__":
     app = App()

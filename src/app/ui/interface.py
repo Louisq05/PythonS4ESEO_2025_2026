@@ -11,8 +11,6 @@ if os.name == "nt":   # Windows
 else:                 # Mac / Linux
     IMAGE_PATH = "src/app/ui/"
 
-button = None
-
 rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo, et il ont des enfants ensemble dans le secret.",
 "Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.", 
 "Chaque soir sont organisé des soirées par M. Valée dans le sous-sol de l’Eseo.", 

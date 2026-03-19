@@ -2,8 +2,8 @@ from tkinter import *
 from tkinter import ttk
 from random import choice
 import os
-from ..core import Graph,save_graph,load_graph
-from tkinter import messagebox
+from ..core import Graph,save_graph,load_graph,is_connected
+from tkinter import messagebox,filedialog
 
 # Détection de l'OS
 if os.name == "nt":   # Windows
@@ -22,7 +22,8 @@ rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo,
 "Tristant s’appelle en réalité Kristian.","Nils entretient une relation avec une caintinière du RU.", 
 "Chloé Jarrousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.", 
 "Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.",
-"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo."]
+"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo.",
+"Louis est sur le point de quitter ESEO pour accepter un CDI chez Atol CD à 42M/an"]
 
 concernés_lst = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
 concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
@@ -265,7 +266,8 @@ class Page3(Frame):
                 messagebox.showinfo("Succès", "Fichier chargé avec succès !")   #Affiche la réussite du chargement d'un fichier
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
-
+        print(self.graph.edges())
+        
 if __name__ == "__main__":
     app = App()
     app.mainloop()

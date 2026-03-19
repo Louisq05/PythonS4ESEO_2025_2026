@@ -74,7 +74,6 @@ class App(Tk):
 
 class Page1(Frame):
     def __init__(self, parent, controller):
-        print("page1")
         super().__init__(parent)
 
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
@@ -98,7 +97,7 @@ class Page1(Frame):
         for k,v in choice(rumeurs).items():
             rumeurs_text=k
             rumeurs_concernés=v
-            print(rumeurs_text,rumeurs_concernés)          
+            print("Rumeur choisie : ", rumeurs_text, "\nConcerné : ", rumeurs_concernés)          
         # Texte : titre "Rumeur :"
         self.canvas.create_text(
             512, 300,
@@ -125,7 +124,6 @@ class Page1(Frame):
 
 class Page2(Frame):
     # Liste des noms
-    print("page2")
     noms = [
         "M. Boubaker", "Louberssac Emilie",
         "Hoerner Isabelle", "Kempnich Arthur",
@@ -181,7 +179,7 @@ class Page2(Frame):
 
 
     def choisir_personne(self, index):
-        print("Bouton choisi :", self.noms[index])
+        print("Point de départ :", self.noms[index])
         self.controller.show_frame(Page3)
         global bouton
         bouton = self.noms[index]
@@ -189,7 +187,6 @@ class Page2(Frame):
 class Page3(Frame):
     
     def __init__(self, parent, controller):
-        print("page3")
 
         super().__init__(parent)
         self.controller = controller
@@ -236,7 +233,6 @@ class Page3(Frame):
                                     font=("Arial", 12, "bold"), state="hidden")         # Choix du text
             return circle_id,text_id
     def _create_circle(self):
-        print("Création des cercles : ")
         for k,v in self.concernés.items():
             self.concernés[k]["circle_id"],self.concernés[k]["text_id"]=self._add_circle(relx=v["x"],rely=v["y"])
             
@@ -250,9 +246,11 @@ class Page3(Frame):
         self.canvas.itemconfigure(text_id, state="hidden")
 
     def run_dfs(self): # dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
+        print("DFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
 
     def run_bfs(self):
+        print("BFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
 
     def on_dfs_click(self):
@@ -273,7 +271,7 @@ class Page3(Frame):
                 messagebox.showinfo("Succès", "Fichier chargé avec succès !")   #Affiche la réussite du chargement d'un fichier
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
-        print(self.graph.edges())
+        print("Graph choisi : ", chemin)
         
 if __name__ == "__main__":
     app = App()

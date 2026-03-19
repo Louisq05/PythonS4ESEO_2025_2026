@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from random import choice
+from random import choice, randint
 import os
 from ..core import Graph,save_graph,load_graph,is_connected
 from tkinter import messagebox,filedialog
@@ -240,7 +240,7 @@ class Page3(Frame):
         self.canvas.itemconfigure(circle_id, state="hidden")
         self.canvas.itemconfigure(text_id, state="hidden")
 
-    def run_dfs(self):
+    def run_dfs(self): # dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
 
     def run_bfs(self):
@@ -257,7 +257,7 @@ class Page3(Frame):
         self.run_bfs()
     
     def init_graph(self):
-        chemin=IMAGE_PATH+"graph.json"
+        chemin=IMAGE_PATH+f"graph{str(randint(1,5))}.json"
         if chemin:
             try:
                 self.graph=load_graph(chemin)   #Utilise la fonction load_graph de src\app\core\io.py pour charger

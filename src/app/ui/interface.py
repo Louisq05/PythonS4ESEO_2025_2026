@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from random import choice, randint
 import os
-from ..core import Graph,save_graph,load_graph,is_connected
+from ..core import Graph,save_graph,load_graph,is_connected,dfs,dfs_path,bfs,bfs_path
 from tkinter import messagebox,filedialog
 
 # Détection de l'OS
@@ -11,17 +11,19 @@ if os.name == "nt":   # Windows
 else:                 # Mac / Linux
     IMAGE_PATH = "src/app/ui/"
 
-rumeurs = ["M. Boubaker est en réalité marié à une surveillante de l’Eseo, et il ont des enfants ensemble dans le secret.",
-"Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.", 
-"Chaque soir sont organisé des soirées par M. Valée dans le sous-sol de l’Eseo.", 
-"M. Trenchant prépare un contrôle surprise en physique quantique.", 
-"Loan à gagné à l’euro millon et prévoit de racheter le batiment de l’Eseo.", 
-"M. Schlinquer imprime des armes en 3d dans le lab de l’eseo.”, “Nils s’appelle en réalité Nelson.", 
-"Tristant s’appelle en réalité Kristian.","Nils entretient une relation avec une caintinière du RU.", 
-"Chloé Jarrousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.", 
-"Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.",
-"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo.",
-"Louis est sur le point de quitter ESEO pour accepter un CDI chez Atol CD à 42M/an"]
+button = None
+
+rumeurs = [{"M. Boubaker est en réalité marié à une surveillante de l’Eseo, et il ont des enfants ensemble dans le secret.":"M. Boubaker"},
+{"Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.":"Victor Bon"}, 
+{"Chaque soir sont organisé des soirées par M. Valée dans le sous-sol de l’Eseo.":"M. Valée"}, 
+{"M. Trenchant prépare un contrôle surprise en physique quantique.":"M. Trenchant"}, 
+{"Loan à gagné à l’euro millon et prévoit de racheter le batiment de l’Eseo.":"Loan Bouyahi"}, 
+{"M. Schlinquer imprime des armes en 3d dans le lab de l’eseo.":"M. Schlinquer"},{"Nils s’appelle en réalité Nelson.":"Nils Coudry"}, 
+{"Tristan s’appelle en réalité Kristian.":"Tristan Bernard"},{"Nils entretient une relation avec une caintinière du RU.":"Nils Coudry"}, 
+{"Chloé Jarrousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.":"Chloé Jarrousseau"}, 
+{"Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.":"M. Trenchant"},
+{"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo.":"M. Vallée"},
+{"Louis est sur le point de quitter ESEO pour accepter un CDI chez Atol CD à 42M/an":"Louis Quibeuf"}]
 
 concernés_lst = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
 concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
@@ -38,7 +40,8 @@ concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
                 "Loan Bouyahi":{"name":"Loan Bouyahi","x":0.7,"y":0.6},
                 "M. Schlinquer":{"name":"M. Schlinquer","x":0.6,"y":0.8},
                 "Nils Coudry":{"name":"Nils Coudry","x":0.7,"y":0.6},
-                "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98}
+                "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98},
+                "Louis Quibeuf":{"name":"Louis Quibeuf","x":0.9,"y":0.98}
                 }                
 
 bouton = None
@@ -90,10 +93,16 @@ class Page1(Frame):
             font=("Helvetica", 30, "bold"),
             fill="black"
         )
+        global rumeurs_text
+        global rumeurs_concernés
+        for k,v in choice(rumeurs).items():
+            rumeurs_text=k
+            rumeurs_concernés=v
+            print(rumeurs_text,rumeurs_concernés)          
         # Texte : titre "Rumeur :"
         self.canvas.create_text(
             512, 300,
-            text=choice(rumeurs),
+            text=rumeurs_text,
             font=("Helvetica", 20),
             fill="black",
             justify="center",

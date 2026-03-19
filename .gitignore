@@ -68,6 +68,10 @@ Thumbs.db
 # Projet spécifique
 *.json
 !example_graph.json
-!graph.json
+!graph1.json
+!graph2.json
+!graph3.json
+!graph4.json
+!graph5.json
 *.csv
 graphs/

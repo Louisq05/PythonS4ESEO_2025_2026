@@ -15,25 +15,25 @@ button = None
 
 rumeurs = [{"M. Boubaker est en réalité marié à une surveillante de l’Eseo, et il ont des enfants ensemble dans le secret.":"M. Boubaker"},
 {"Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.":"Victor Bon"}, 
-{"Chaque soir sont organisé des soirées par M. Valée dans le sous-sol de l’Eseo.":"M. Valée"}, 
+{"Chaque soir sont organisé des soirées par M. Valée dans le sous-sol de l’Eseo.":"M. Valee"}, 
 {"M. Trenchant prépare un contrôle surprise en physique quantique.":"M. Trenchant"}, 
 {"Loan à gagné à l’euro millon et prévoit de racheter le batiment de l’Eseo.":"Loan Bouyahi"}, 
 {"M. Schlinquer imprime des armes en 3d dans le lab de l’eseo.":"M. Schlinquer"},{"Nils s’appelle en réalité Nelson.":"Nils Coudry"}, 
 {"Tristan s’appelle en réalité Kristian.":"Tristan Bernard"},{"Nils entretient une relation avec une caintinière du RU.":"Nils Coudry"}, 
-{"Chloé Jarrousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.":"Chloé Jarrousseau"}, 
+{"Chloé Jarousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.":"Chloe Jarousseau"}, 
 {"Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.":"M. Trenchant"},
-{"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo.":"M. Vallée"},
+{"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo.":"M. Vallee"},
 {"Louis est sur le point de quitter ESEO pour accepter un CDI chez Atol CD à 42M/an":"Louis Quibeuf"}]
 
-concernés_lst = ["M. Boubaker", "Victor", "M. Valée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloé Jarousseau", "M. Trenchant", "Cyril Valée" ]
+concernés_lst = ["M. Boubaker", "Victor", "M. Valee", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloe Jarousseau", "M. Trenchant", "Cyril Valée" ]
 concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
                 "Louberssac Emilie":{"name":"Louberssac Emilie","x":0.4,"y":0.75},
                 "Hoerner Isabelle":{"name":"Hoerner Isabelle","x":0.46,"y":0.475},
                 "Kempnich Arthur":{"name":"Kempnich Arthur","x":0.5,"y":0.56},
                 "M. Trenchant":{"name":"M. Trenchant","x":0.35,"y":0.6},
                 "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75},
-                "Chloé Jarousseau":{"name":"Chloé Jarousseau","x":0.35,"y":0.475},
-                "M. Valée":{"name":"M. Valée","x":0.375,"y":0.475},
+                "Chloe Jarousseau":{"name":"Chloe Jarousseau","x":0.35,"y":0.475},
+                "M. Valee":{"name":"M. Valee","x":0.375,"y":0.475},
                 "Nicol Matheo":{"name":"Nicol Matheo","x":0.98,"y":0.85},
                 "Mary Yanis":{"name":"Mary Yanis","x":0.675,"y":0.75},
                 "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6},
@@ -128,7 +128,7 @@ class Page2(Frame):
         "M. Boubaker", "Louberssac Emilie",
         "Hoerner Isabelle", "Kempnich Arthur",
         "M. Trenchant", "Matteo Aillet",
-        "Chloé Jarousseau", "M. Valée",
+        "Chloe Jarousseau", "M. Valee",
         "Nicol Matheo", "Mary Yanis"
     ]
     
@@ -248,10 +248,20 @@ class Page3(Frame):
     def run_dfs(self): # dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
         print("DFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
+        print(bouton)
+        result_path=dfs_path(self.graph,bouton,rumeurs_concernés)
+        print(result_path)
+        for i in result_path:
+            self.show_circle(self.concernés[i]["circle_id"],self.concernés[i]["text_id"])
 
     def run_bfs(self):
         print("BFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
+        print(bouton)
+        result_path=bfs_path(self.graph,bouton,rumeurs_concernés)
+        print(result_path)
+        for i in result_path:
+            self.show_circle(self.concernés[i]["circle_id"],self.concernés[i]["text_id"])
 
     def on_dfs_click(self):
         self.btn_dfs.place_forget()
@@ -268,7 +278,7 @@ class Page3(Frame):
         if chemin:
             try:
                 self.graph=load_graph(chemin)   #Utilise la fonction load_graph de src\app\core\io.py pour charger
-                messagebox.showinfo("Succès", "Fichier chargé avec succès !")   #Affiche la réussite du chargement d'un fichier
+                #messagebox.showinfo("Succès", "Fichier chargé avec succès !")   #Affiche la réussite du chargement d'un fichier
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
         print("Graph choisi : ", chemin)

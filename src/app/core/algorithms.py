@@ -192,12 +192,13 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     file.append((start, [start]))   # (noeud actuel, chemin jusqu'ici)
 
     while file:
+        print(visited)
         node, path = file.popleft() # popleft = FO du FIFO
         if node not in visited:
             visited.add(node)
             for neighbor in graph.neighbors(node):
                 if neighbor == goal:
-                    return path + [neighbor]
+                    return list(visited)+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
                 if neighbor not in visited:
                     file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
     return None

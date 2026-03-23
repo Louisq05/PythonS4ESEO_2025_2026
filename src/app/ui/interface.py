@@ -286,8 +286,3 @@ class Page3(Frame):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
-
-    """
-    Idée pour la suite :
-    créer les boutons DFS BFS qui apparaitront au debut de page3
-    attendre qu'on clique pour déclencher l'apparition du premier cercle"""

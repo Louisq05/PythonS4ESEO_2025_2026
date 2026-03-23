@@ -249,19 +249,17 @@ class Page3(Frame):
         print("DFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
         print(bouton)
-        result_path=dfs_path(self.graph,bouton,rumeurs_concernés)
+        result_path=[bouton]+dfs_path(self.graph,bouton,rumeurs_concernés)
         print(result_path)
-        for i in result_path:
-            self.show_circle(self.concernés[i]["circle_id"],self.concernés[i]["text_id"])
+        self.after(500, lambda: self.show_circle_delay(bouton, result_path[0], result_path[1:]))
 
     def run_bfs(self):
         print("BFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
         print(bouton)
-        result_path=bfs_path(self.graph,bouton,rumeurs_concernés)
+        result_path=[bouton]+bfs_path(self.graph,bouton,rumeurs_concernés)
         print(result_path)
-        for i in result_path:
-            self.show_circle(self.concernés[i]["circle_id"],self.concernés[i]["text_id"])
+        self.after(500, lambda: self.show_circle_delay(bouton, result_path[0], result_path[1:]))
 
     def on_dfs_click(self):
         self.btn_dfs.place_forget()
@@ -282,6 +280,47 @@ class Page3(Frame):
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
         print("Graph choisi : ", chemin)
+    
+    def show_circle_delay(self, prev_node, current_node, remaining_path):
+        if prev_node is not None:
+            self.draw_arrow(prev_node, current_node)
+            self.show_message(prev_node, current_node)
+
+        self.show_circle(self.concernés[current_node]["circle_id"],self.concernés[current_node]["text_id"])
+
+        if remaining_path:
+            next_node = remaining_path[0]
+            remain = remaining_path[1:]
+            self.after(500, lambda: self.show_circle_delay(current_node, next_node, remain))
+
+    def show_message(self, from_node, to_node):
+        message = f"{from_node} → {to_node}"
+        if not hasattr(self, "message_id"):
+            self.message_id = self.canvas.create_text(200, 50, text=message, fill="black")
+        else:
+            self.canvas.itemconfig(self.message_id, text=message)
+    
+    def draw_arrow(self, from_node, to_node):
+        c_coords = self.canvas.coords(self.concernés[from_node]["circle_id"])
+        n_coords = self.canvas.coords(self.concernés[to_node]["circle_id"])
+
+        x1 = (c_coords[0] + c_coords[2]) / 2
+        y1 = (c_coords[1] + c_coords[3]) / 2
+        x2 = (n_coords[0] + n_coords[2]) / 2
+        y2 = (n_coords[1] + n_coords[3]) / 2
+
+        # supprimer l’ancienne flèche si elle existe
+        if hasattr(self, "arrow_id"):
+            self.canvas.delete(self.arrow_id)
+
+        # créer la flèche
+        self.arrow_id = self.canvas.create_line(
+            x1, y1, x2, y2,
+            arrow="last",
+            width=5,
+            arrowshape=(20, 25, 10),
+            fill="blue"
+        )
         
 if __name__ == "__main__":
     app = App()

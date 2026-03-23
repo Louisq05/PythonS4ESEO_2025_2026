@@ -142,19 +142,19 @@ def bfs(graph: Graph, start: str) -> list[str]:
     """
     # Astuce : file = deque(), visited = set
     file = deque()                                  # Création de la file : dequeu pour implementer le FIFO
-    visited = set()
+    visited = []
     result = []
     file.append(start)
 
     while file:
         node = file.popleft()                       # popleft = FO de FIFO
         if node not in visited:
-            visited.add(node)
+            visited.append(node)
             result.append(node)
             for neighbor in graph.neighbors(node):  # ordre alphabétique conservé
                 if neighbor not in visited:
                     file.append(neighbor)           # append = FI de FIFO
-    return result
+    return visited
 
 def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     """
@@ -188,17 +188,16 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     if start == goal:               # Si la condition est remplie
         return [start]              # Sortie de la fonction
     file = deque()
-    visited = set()  
+    visited = []  
     file.append((start, [start]))   # (noeud actuel, chemin jusqu'ici)
 
     while file:
-        print(visited)
         node, path = file.popleft() # popleft = FO du FIFO
         if node not in visited:
-            visited.add(node)
+            visited.append(node)
             for neighbor in graph.neighbors(node):
                 if neighbor == goal:
-                    return list(visited)+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
+                    return visited+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
                 if neighbor not in visited:
                     file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
     return None

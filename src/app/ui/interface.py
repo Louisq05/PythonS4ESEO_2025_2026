@@ -15,17 +15,17 @@ button = None
 
 rumeurs = [{"M. Boubaker est en réalité marié à une surveillante de l’Eseo, et il ont des enfants ensemble dans le secret.":"M. Boubaker"},
 {"Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.":"Victor Bon"}, 
-{"Chaque soir sont organisé des soirées par M. Valée dans le sous-sol de l’Eseo.":"M. Valee"}, 
+{"Chaque soir sont organisé des soirées par M. Vallée dans le sous-sol de l’Eseo.":"M. Vallée"}, 
 {"M. Trenchant prépare un contrôle surprise en physique quantique.":"M. Trenchant"}, 
 {"Loan à gagné à l’euro millon et prévoit de racheter le batiment de l’Eseo.":"Loan Bouyahi"}, 
 {"M. Schlinquer imprime des armes en 3d dans le lab de l’eseo.":"M. Schlinquer"},{"Nils s’appelle en réalité Nelson.":"Nils Coudry"}, 
 {"Tristan s’appelle en réalité Kristian.":"Tristan Bernard"},{"Nils entretient une relation avec une caintinière du RU.":"Nils Coudry"}, 
 {"Chloé Jarousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.":"Chloe Jarousseau"}, 
 {"Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.":"M. Trenchant"},
-{"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo.":"M. Vallee"},
+{"M. Vallée passe les vacances d’été sur un yatch financé par l’eseo.":"M. Vallée"},
 {"Louis est sur le point de quitter ESEO pour accepter un CDI chez Atol CD à 42M/an":"Louis Quibeuf"}]
 
-concernés_lst = ["M. Boubaker", "Victor", "M. Valee", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloe Jarousseau", "M. Trenchant", "Cyril Valée" ]
+concernés_lst = ["M. Boubaker", "Victor", "M. Vallée", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloe Jarousseau", "M. Trenchant", "M. Vallée" ]
 concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
                 "Louberssac Emilie":{"name":"Louberssac Emilie","x":0.4,"y":0.75},
                 "Hoerner Isabelle":{"name":"Hoerner Isabelle","x":0.46,"y":0.475},
@@ -33,7 +33,7 @@ concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
                 "M. Trenchant":{"name":"M. Trenchant","x":0.35,"y":0.6},
                 "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75},
                 "Chloe Jarousseau":{"name":"Chloe Jarousseau","x":0.35,"y":0.475},
-                "M. Valee":{"name":"M. Valee","x":0.375,"y":0.475},
+                "M. Vallée":{"name":"M. Vallée","x":0.375,"y":0.475},
                 "Nicol Matheo":{"name":"Nicol Matheo","x":0.98,"y":0.85},
                 "Mary Yanis":{"name":"Mary Yanis","x":0.675,"y":0.75},
                 "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6},
@@ -128,7 +128,7 @@ class Page2(Frame):
         "M. Boubaker", "Louberssac Emilie",
         "Hoerner Isabelle", "Kempnich Arthur",
         "M. Trenchant", "Matteo Aillet",
-        "Chloe Jarousseau", "M. Valee",
+        "Chloe Jarousseau", "M. Vallée",
         "Nicol Matheo", "Mary Yanis"
     ]
     
@@ -200,12 +200,12 @@ class Page3(Frame):
         # DFS
         self.btn_dfs = ttk.Button(self, text="DFS",
                     command=lambda: self.on_dfs_click())
-        self.btn_dfs.place(relx=0.55, rely=0.9, anchor="center")
+        self.btn_dfs.place(relx=0.15, rely=0.2, anchor="center")
 
         # BFS
         self.btn_bfs = ttk.Button(self, text="BFS",
                     command=lambda: self.on_bfs_click())
-        self.btn_bfs.place(relx=0.45, rely=0.9, anchor="center")
+        self.btn_bfs.place(relx=0.25, rely=0.2, anchor="center")
 
         # Quitter
         ttk.Button(self, text="Quit",
@@ -291,12 +291,12 @@ class Page3(Frame):
         if remaining_path:
             next_node = remaining_path[0]
             remain = remaining_path[1:]
-            self.after(500, lambda: self.show_circle_delay(current_node, next_node, remain))
+            self.after(randint(500, 1500), lambda: self.show_circle_delay(current_node, next_node, remain))
 
     def show_message(self, from_node, to_node):
-        message = f"{from_node} → {to_node}"
+        message = f"{from_node} en a parlé à {to_node}"
         if not hasattr(self, "message_id"):
-            self.message_id = self.canvas.create_text(200, 50, text=message, fill="black")
+            self.message_id = self.canvas.create_text(220, 100, text=message, font=("Helvetica", 10, "bold"), fill="#E72ACB")
         else:
             self.canvas.itemconfig(self.message_id, text=message)
     

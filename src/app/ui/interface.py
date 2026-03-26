@@ -249,7 +249,7 @@ class Page3(Frame):
         print("DFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
         print(bouton)
-        result_path=[bouton]+dfs_path(self.graph,bouton,rumeurs_concernés)
+        result_path=dfs_path(self.graph,bouton,rumeurs_concernés)
         print(result_path)
         self.after(500, lambda: self.show_circle_delay(bouton, result_path[0], result_path[1:]))
 
@@ -257,7 +257,7 @@ class Page3(Frame):
         print("BFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
         print(bouton)
-        result_path=[bouton]+bfs_path(self.graph,bouton,rumeurs_concernés)
+        result_path=bfs_path(self.graph,bouton,rumeurs_concernés)
         print(result_path)
         self.after(500, lambda: self.show_circle_delay(bouton, result_path[0], result_path[1:]))
 
@@ -319,7 +319,7 @@ class Page3(Frame):
             arrow="last",
             width=5,
             arrowshape=(20, 25, 10),
-            fill="blue"
+            fill="#E72A2A"
         )
         
 if __name__ == "__main__":

@@ -251,7 +251,7 @@ class Page3(Frame):
         print(bouton)
         result_path=dfs_path(self.graph,bouton,rumeurs_concernés)
         print(result_path)
-        self.after(500, lambda: self.show_circle_delay(bouton, result_path[0], result_path[1:]))
+        self.after(500, lambda: self.show_circle_delay(bouton, result_path[1], result_path[2:]))
 
     def run_bfs(self):
         print("BFS choisi")
@@ -259,7 +259,7 @@ class Page3(Frame):
         print(bouton)
         result_path=bfs_path(self.graph,bouton,rumeurs_concernés)
         print(result_path)
-        self.after(500, lambda: self.show_circle_delay(bouton, result_path[0], result_path[1:]))
+        self.after(500, lambda: self.show_circle_delay(bouton, result_path[1], result_path[2:]))
 
     def on_dfs_click(self):
         self.btn_dfs.place_forget()
@@ -287,14 +287,18 @@ class Page3(Frame):
             self.show_message(prev_node, current_node)
 
         self.show_circle(self.concernés[current_node]["circle_id"],self.concernés[current_node]["text_id"])
-
         if remaining_path:
             next_node = remaining_path[0]
             remain = remaining_path[1:]
             self.after(randint(500, 1500), lambda: self.show_circle_delay(current_node, next_node, remain))
 
     def show_message(self, from_node, to_node):
-        message = f"{from_node} en a parlé à {to_node}"
+        if from_node==to_node:
+            message=f"Vous en avez parlé à la personne concerné"
+        elif to_node==rumeurs_concernés:
+            message=f"{from_node} a appris à {to_node} la rumeur le concernant"
+        else:
+            message = f"{from_node} en a parlé à {to_node}"
         if not hasattr(self, "message_id"):
             self.message_id = self.canvas.create_text(220, 100, text=message, font=("Helvetica", 10, "bold"), fill="#E72ACB")
         else:

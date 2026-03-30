@@ -300,7 +300,7 @@ class Page3(Frame):
         else:
             message = f"{from_node} en a parlé à {to_node}"
         if not hasattr(self, "message_id"):
-            self.message_id = self.canvas.create_text(220, 100, text=message, font=("Helvetica", 10, "bold"), fill="#E72ACB")
+            self.message_id = self.canvas.create_text(220, 100, text=message, font=("Helvetica", 10, "bold"), fill="#07FB28")
         else:
             self.canvas.itemconfig(self.message_id, text=message)
     

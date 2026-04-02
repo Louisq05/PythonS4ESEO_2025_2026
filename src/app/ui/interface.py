@@ -34,14 +34,14 @@ concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
                 "Matteo Aillet":{"name":"Matteo Aillet","x":0.35,"y":0.75},
                 "Chloe Jarousseau":{"name":"Chloe Jarousseau","x":0.35,"y":0.475},
                 "M. Vallee":{"name":"M. Vallee","x":0.375,"y":0.475},
-                "Nicol Matheo":{"name":"Nicol Matheo","x":0.98,"y":0.85},
+                "Nicol Matheo":{"name":"Nicol Matheo","x":0.93,"y":0.85},
                 "Mary Yanis":{"name":"Mary Yanis","x":0.675,"y":0.75},
-                "Victor Bon":{"name":"Victor Bon","x":0.7,"y":0.6},
-                "Loan Bouyahi":{"name":"Loan Bouyahi","x":0.7,"y":0.6},
+                "Victor Bon":{"name":"Victor Bon","x":0.64,"y":0.6},
+                "Loan Bouyahi":{"name":"Loan Bouyahi","x":0.67,"y":0.6},
                 "M. Schlinquer":{"name":"M. Schlinquer","x":0.6,"y":0.8},
                 "Nils Coudry":{"name":"Nils Coudry","x":0.7,"y":0.6},
                 "Tristan Bernard":{"name":"Tristan Bernard","x":0.9,"y":0.98},
-                "Louis Quibeuf":{"name":"Louis Quibeuf","x":0.9,"y":0.98}
+                "Louis Quibeuf":{"name":"Louis Quibeuf","x":0.08,"y":0.7}
                 }                
 
 bouton = None
@@ -235,7 +235,21 @@ class Page3(Frame):
     def _create_circle(self):
         for k,v in self.concernés.items():
             self.concernés[k]["circle_id"],self.concernés[k]["text_id"]=self._add_circle(relx=v["x"],rely=v["y"])
-            
+        # Bind hover events to the circle using the specific name
+            self.canvas.tag_bind(self.concernés[k]["circle_id"], "<Enter>", lambda event, n=v["name"]: self.on_enter(event, n))
+            self.canvas.tag_bind(self.concernés[k]["circle_id"], "<Leave>", self.on_leave)
+            self.canvas.tag_bind(self.concernés[k]["text_id"], "<Enter>", lambda event, n=v["name"]: self.on_enter(event, n))
+            self.canvas.tag_bind(self.concernés[k]["text_id"], "<Leave>", self.on_leave)
+    
+    def on_enter(self, event, name):
+        # Display the name when hovering over the oval
+        self.canvas.create_text(event.x + 25, event.y - 15, text=name,
+                                fill="red", font=("Arial", 12, "bold"),
+                                tags="tooltip")
+
+    def on_leave(self, event):
+        # Remove the tooltip
+        self.canvas.delete("tooltip")
     
     def show_circle(self,circle_id,text_id):
         self.canvas.itemconfigure(circle_id, state="normal")

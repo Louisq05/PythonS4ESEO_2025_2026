@@ -191,8 +191,11 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     visited = [] 
     relations = [] 
     file.append((start, [start]))   # (noeud actuel, chemin jusqu'ici)
+    dict_tours = {0: {"Au courant": [start]}}
+    tours = 0
 
     while file:
+        nouveaux = []
         node, path = file.popleft() # popleft = FO du FIFO
         if node not in visited:
             visited.append(node)
@@ -201,9 +204,14 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
             for neighbor in graph.neighbors(node):
                 if neighbor == goal:
                     print(relations)
-                    return visited+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
+                    #return visited+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
+                    return dict_tours
                 if neighbor not in visited:
+                    nouveaux.append(neighbor)
                     file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
+        if nouveaux:
+                tours += 1
+                dict_tours[tours] = {"Au courant": nouveaux}
     return None
 
 

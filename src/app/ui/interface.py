@@ -264,7 +264,7 @@ class Page3(Frame):
         self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
         print(bouton)
         result_path=dfs_path(self.graph,bouton,rumeurs_concernés)
-        self.after(500, lambda: self.show_circle_delay(result_path[1], result_path[2:]),[])
+        self.after(500, lambda: self.show_circle_delay(bouton,result_path[1], result_path[2:]))
 
     def run_bfs(self):
         print("BFS choisi")
@@ -274,7 +274,7 @@ class Page3(Frame):
         print(result_path)
         for k,v in result_path.items():
             for link in v["Au courant"]:
-                self.after(500, lambda: self.show_circle_delay(bouton, link[0], link[1]))
+                self.after(500, lambda: self.show_circle_delay(link[0], link[1],[]))
 
     def on_dfs_click(self):
         self.btn_dfs.place_forget()

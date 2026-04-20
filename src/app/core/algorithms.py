@@ -191,9 +191,9 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     visited = [] 
     relations = [] 
     file.append((start, [start]))   # (noeud actuel, chemin jusqu'ici)
-    dict_tours = {0: {"Au courant": [start]}}
+    dict_tours = {}
     tours = 0
-
+    finish=False
     while file:
         nouveaux = []
         node, path = file.popleft() # popleft = FO du FIFO
@@ -201,17 +201,21 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
             visited.append(node)
             for i in range(len(graph.neighbors(node))) :
                 relations.append((node,graph.neighbors(node)[i]))
-            for neighbor in graph.neighbors(node):
-                if neighbor == goal:
-                    print(relations)
-                    #return visited+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
-                    return dict_tours
-                if neighbor not in visited:
-                    nouveaux.append(neighbor)
-                    file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
+                for neighbor in graph.neighbors(node):
+                    if neighbor not in visited:
+                        if (node,graph.neighbors(node)[i]) not in nouveaux and (graph.neighbors(node)[i],node) not in relations:
+                            nouveaux.append((node,graph.neighbors(node)[i]))
+                            file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
+                    if neighbor == goal:
+                        #print(relations)
+                        #return visited+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
+                        finish=True
+                         
         if nouveaux:
                 tours += 1
                 dict_tours[tours] = {"Au courant": nouveaux}
+                if finish :
+                    return dict_tours 
     return None
 
 

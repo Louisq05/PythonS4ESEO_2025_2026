@@ -216,7 +216,7 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
                 dict_tours[tours] = {"Au courant": nouveaux}
                 if finish :
                     return dict_tours 
-    return None
+    return dict_tours
 
 
 # ============================================================================

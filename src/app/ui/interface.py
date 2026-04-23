@@ -259,22 +259,42 @@ class Page3(Frame):
         self.canvas.itemconfigure(circle_id, state="hidden")
         self.canvas.itemconfigure(text_id, state="hidden")
 
-    def run_dfs(self): # dfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
+    def run_dfs(self):
         print("DFS choisi")
-        self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
+        self.show_circle(self.concernés[bouton]["circle_id"], self.concernés[bouton]["text_id"])
         print(bouton)
-        result_path=dfs_path(self.graph,bouton,rumeurs_concernés)
-        self.after(500, lambda: self.show_circle_delay(bouton,result_path[1], result_path[2:]))
+        result_path = dfs_path(self.graph, bouton, rumeurs_concernés)
+        print("result path :", result_path)
+
+        delay = 500
+        for i in range(1, len(result_path)):
+            from_node = result_path[i - 1]
+            to_node = result_path[i]
+            self.after(delay, lambda f=from_node, t=to_node: self._bfs_step(f, t))
+            delay += 500
 
     def run_bfs(self):
         print("BFS choisi")
-        self.show_circle(self.concernés[bouton]["circle_id"],self.concernés[bouton]["text_id"])
-        print(bouton)
-        result_path=bfs_path(self.graph,bouton,rumeurs_concernés)
-        print(result_path)
-        for k,v in result_path.items():
+        self.show_circle(self.concernés[bouton]["circle_id"], self.concernés[bouton]["text_id"])
+        result_path = bfs_path(self.graph, bouton, rumeurs_concernés)
+        print("result path :", result_path)
+
+        delay = 500
+        for k, v in result_path.items():
             for link in v["Au courant"]:
-                self.after(500, lambda: self.show_circle_delay(link[0], link[1],[]))
+                from_node, to_node = link[0], link[1]
+                print(from_node, "->", to_node)
+                self.after(delay, lambda f=from_node, t=to_node: self._bfs_step(f, t))
+                delay += 500
+
+    def _bfs_step(self, from_node, to_node):
+        """Affiche une étape BFS : flèche + cercle + message."""
+        self.draw_arrow(from_node, to_node)
+        self.show_circle(
+            self.concernés[to_node]["circle_id"],
+            self.concernés[to_node]["text_id"]
+        )
+        self.show_message(from_node, to_node)
 
     def on_dfs_click(self):
         self.btn_dfs.place_forget()
@@ -296,17 +316,17 @@ class Page3(Frame):
                 messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
         print("Graph choisi : ", chemin)
     
-    def show_circle_delay(self, prev_node, current_node, remaining_path):
+    def show_circle_delay(self, prev_node, current_node):
         if prev_node is not None:
             self.draw_arrow(prev_node, current_node)
             self.show_message(prev_node, current_node)
 
         self.show_circle(self.concernés[current_node]["circle_id"],self.concernés[current_node]["text_id"])
 
-        if remaining_path:
-            next_node = remaining_path[0]
-            remain = remaining_path[1:]
-            self.after(randint(500, 1500), lambda: self.show_circle_delay(current_node, next_node, remain))
+        # if remaining_path:
+        #     next_node = remaining_path[0]
+        #     remain = remaining_path[1:]
+        #     self.after(randint(500, 1500), lambda: self.show_circle_delay(current_node, next_node, remain))
 
     def show_message(self, from_node, to_node):
         if from_node==to_node:

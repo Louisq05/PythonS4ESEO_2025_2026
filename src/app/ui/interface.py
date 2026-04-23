@@ -198,14 +198,14 @@ class Page3(Frame):
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         # DFS
-        self.btn_dfs = ttk.Button(self, text="DFS",
+        self.btn_dfs = ttk.Button(self, text="Je t'en parle, mais ne le dis à personne (DFS)",
                     command=lambda: self.on_dfs_click())
-        self.btn_dfs.place(relx=0.15, rely=0.2, anchor="center")
+        self.btn_dfs.place(relx=0.2, rely=0.15, anchor="center")
 
         # BFS
-        self.btn_bfs = ttk.Button(self, text="BFS",
+        self.btn_bfs = ttk.Button(self, text="Tu as entendu la nouvelle ? (BFS)",
                     command=lambda: self.on_bfs_click())
-        self.btn_bfs.place(relx=0.25, rely=0.2, anchor="center")
+        self.btn_bfs.place(relx=0.2, rely=0.2, anchor="center")
 
         # Quitter
         ttk.Button(self, text="Quit",
@@ -283,7 +283,6 @@ class Page3(Frame):
         for k, v in result_path.items():
             for link in v["Au courant"]:
                 from_node, to_node = link[0], link[1]
-                print(from_node, "->", to_node)
                 self.after(delay, lambda f=from_node, t=to_node: self._bfs_step(f, t))
                 delay += 500
 

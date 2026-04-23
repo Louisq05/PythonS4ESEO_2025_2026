@@ -80,7 +80,7 @@ class Page1(Frame):
         self.canvas.pack(fill="both", expand=True)
 
         # Référence image de fond
-        self.bg = PhotoImage(file=IMAGE_PATH + "page_rumeur.png", master=self.canvas)
+        self.bg = PhotoImage(file=IMAGE_PATH + "page1.png", master=self.canvas)
 
         # Image de fond
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
@@ -140,7 +140,7 @@ class Page2(Frame):
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
-        self.bg = PhotoImage(file=IMAGE_PATH + "page_rumeur.png", master=self.canvas)
+        self.bg = PhotoImage(file=IMAGE_PATH + "page2.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         self.canvas.create_text(
@@ -168,9 +168,9 @@ class Page2(Frame):
                 btn.grid(row=row, column=col, padx=10, pady=10)
 
         # Bouton retour
-        ttk.Button(self, text="Aller à la page 1",
-                   command=lambda: controller.show_frame(Page1))\
-            .place(relx=0.5, rely=0.9, anchor="center")
+        # ttk.Button(self, text="Aller à la page 1",
+        #            command=lambda: controller.show_frame(Page1))\
+        #     .place(relx=0.5, rely=0.9, anchor="center")
 
         # Quitter
         ttk.Button(self, text="Quit",

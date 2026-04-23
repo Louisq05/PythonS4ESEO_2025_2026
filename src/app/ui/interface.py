@@ -87,9 +87,9 @@ class Page1(Frame):
 
         # Texte : titre "Rumeur :"
         self.canvas.create_text(
-            512, 100,
+            512, 200,
             text="Rumeur :",
-            font=("Helvetica", 30, "bold"),
+            font=("OCR A Extended", 30, "bold"),
             fill="black"
         )
         global rumeurs_text
@@ -102,7 +102,7 @@ class Page1(Frame):
         self.canvas.create_text(
             512, 300,
             text=rumeurs_text,
-            font=("Helvetica", 20),
+            font=("OCR A Extended", 15),
             fill="black",
             justify="center",
             width=625
@@ -131,7 +131,18 @@ class Page2(Frame):
         "Chloe Jarousseau", "M. Vallee",
         "Nicol Matheo", "Mary Yanis"
     ]
-    
+    annuaire_data = {
+    "M. Boubaker": 0,
+    "Louberssac Emilie": 1,
+    "Hoerner Isabelle": 2,
+    "Kempnich Arthur": 3,
+    "M. Trenchant": 4,
+    "Matteo Aillet": 5,
+    "Chloe Jarousseau": 6,
+    "M. Vallee": 7,
+    "Nicol Matheo": 8,
+    "Mary Yanis": 9
+}
     def __init__(self, parent, controller):
 
         super().__init__(parent)
@@ -144,35 +155,33 @@ class Page2(Frame):
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
         self.canvas.create_text(
-            512, 100,
-            text="A qui voulez-vous en parler ?",
-            font=("Helvetica", 30, "bold"),
-            fill="black"
+            512, 225,
+            text="A qui voulez-\nvous en parler ?",
+            font=("OCR A Extended", 11, "bold"),
+            fill="red",
+            justify="center"
         )
+        start_y = 150        # Y coordinate for the first line
+        line_spacing = 35    # Vertical space between each line
+        x_name_col = 725     # X coordinate for the names column (left-aligned)
+        x_num_col = 950      # X coordinate for the numbers column (right-aligned)
 
-        # Frame pour la grille
-        grid_frame = Frame(self)
-        self.canvas.create_window(512, 320, window=grid_frame)
-
-        # Création 5 lignes x 2 colonnes
-        for row in range(5):
-            for col in range(2):
-                index = row * 2 + col
-
-                btn = ttk.Button(
-                    grid_frame,
-                    text=self.noms[index],
-                    command=lambda i=index: self.choisir_personne(i),
-                    width=30
-                )
-                btn.grid(row=row, column=col, padx=10, pady=10)
-
-        # Bouton retour
-        # ttk.Button(self, text="Aller à la page 1",
-        #            command=lambda: controller.show_frame(Page1))\
-        #     .place(relx=0.5, rely=0.9, anchor="center")
-
-        # Quitter
+        for index, (name, number) in enumerate(self.annuaire_data.items()):
+            current_y = start_y + (index * line_spacing)
+            self.canvas.create_text(
+                x_name_col, current_y,
+                text=f"{name} :",
+                font=("Helvetica", 15, "bold"),
+                fill="red",
+                anchor="w" 
+            )
+            self.canvas.create_text(
+            x_num_col, current_y,
+            text=str(number),
+            font=("Helvetica", 15, "bold"),
+            fill="red",
+            anchor="e" 
+            )
         ttk.Button(self, text="Quit",
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")

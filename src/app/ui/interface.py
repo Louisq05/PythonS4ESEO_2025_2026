@@ -158,7 +158,7 @@ class Page2(Frame):
             512, 225,
             text="A qui voulez-\nvous en parler ?",
             font=("OCR A Extended", 11, "bold"),
-            fill="red",
+            fill="black",
             justify="center"
         )
         start_y = 150        # Y coordinate for the first line
@@ -171,15 +171,15 @@ class Page2(Frame):
             self.canvas.create_text(
                 x_name_col, current_y,
                 text=f"{name} :",
-                font=("Helvetica", 15, "bold"),
-                fill="red",
+                font=("Lucida Handwriting", 12, "bold"),
+                fill="black",
                 anchor="w" 
             )
             self.canvas.create_text(
             x_num_col, current_y,
             text=str(number),
-            font=("Helvetica", 15, "bold"),
-            fill="red",
+            font=("Lucida Handwriting", 15, "bold"),
+            fill="black",
             anchor="e" 
             )
         ttk.Button(self, text="Quit",

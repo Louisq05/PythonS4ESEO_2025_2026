@@ -191,8 +191,11 @@ class Page2(Frame):
         clavier = [[0.42, 0.67], [0.5, 0.69], [0.58, 0.67], [0.42, 0.74], [0.5, 0.76], [0.58, 0.74],  [0.42, 0.81], [0.5, 0.83], [0.58, 0.81], [0.5, 0.9]]
 
         for i in range(len(clavier)) :
-            index=i
-            self.btn_dfs = ttk.Button(self, text=str(i),
+            if i < 9 :
+                index=i+1
+            else :
+                index = 0
+            self.btn_dfs = ttk.Button(self, text=str(index),
                         command=lambda i=index: self.choisir_personne(i))
             self.btn_dfs.place(relx=clavier[i][0], rely=clavier[i][1], anchor="center")
 

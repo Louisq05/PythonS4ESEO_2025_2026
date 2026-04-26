@@ -97,11 +97,22 @@ class Page1(Frame):
         for k,v in choice(rumeurs).items():
             rumeurs_text=k
             rumeurs_concernés=v
-            print("Rumeur choisie : ", rumeurs_text, "\nConcerné : ", rumeurs_concernés)          
+            print("Rumeur choisie : ", rumeurs_text, "\nConcerné : ", rumeurs_concernés)  
+        if len(rumeurs_text) > 30:
+            lines = []
+            nb_lignes = len(rumeurs_text) // 30 + 1
+
+            for i in range(nb_lignes):
+                lines.append(rumeurs_text[30*i:30*(i+1)])
+
+            rumeurs_text_formated = "\n".join(lines)
+        else:
+            rumeurs_text_formated = rumeurs_text
+
         # Texte : titre "Rumeur :"
         self.canvas.create_text(
             512, 300,
-            text=rumeurs_text,
+            text=rumeurs_text_formated,
             font=("OCR A Extended", 15),
             fill="black",
             justify="center",
@@ -110,16 +121,42 @@ class Page1(Frame):
 
         # Boutons
 
-        # Changer de page
-        ttk.Button(self, text="Suivant",
-                   command=lambda: controller.show_frame(Page2))\
-            .place(relx=0.5, rely=0.9, anchor="center")
+        # Zone cliquable invisible pour "Suivant"
+        LARGEUR = 200   # augmente ici (x2-x3)
+        HAUTEUR = 80
 
+        x = int(0.5 * 1024)
+        y = int(0.875 * 608)
 
-        # Quitter
-        ttk.Button(self, text="Quit",
-                   command=controller.destroy)\
-            .place(relx=0.95, rely=0.05, anchor="center")
+        zone_suivant = self.canvas.create_rectangle(
+            x - LARGEUR // 2, y - HAUTEUR // 2,
+            x + LARGEUR // 2, y + HAUTEUR // 2,
+            fill="",
+            outline="",
+            tags="btn_suivant"
+        )
+
+        self.canvas.tag_bind(
+            zone_suivant,
+            "<Button-1>",
+            lambda e: controller.show_frame(Page2)
+        ) 
+# Zone cliquable invisible pour "Quit" 
+        LARGEUR = 100
+        HAUTEUR = 40 
+        x = int(0.95 * 1024) 
+        y = int(0.05 * 608) 
+        zone_quit = self.canvas.create_rectangle(
+            x - LARGEUR // 2, y - HAUTEUR // 2, 
+            x + LARGEUR // 2, y + HAUTEUR // 2, 
+            fill="", 
+            outline="", 
+            tags="btn_quit" ) 
+        self.canvas.tag_bind( 
+            zone_quit, 
+            "<Button-1>", 
+            lambda e: controller.destroy() 
+)
 
 
 class Page2(Frame):
@@ -189,9 +226,23 @@ class Page2(Frame):
             fill="black",
             anchor="e" 
             )
-        ttk.Button(self, text="Quit",
-                   command=controller.destroy)\
-            .place(relx=0.95, rely=0.05, anchor="center")
+
+        # Zone cliquable invisible pour "Quit" 
+        LARGEUR = 100
+        HAUTEUR = 40 
+        x = int(0.95 * 1024) 
+        y = int(0.05 * 608) 
+        zone_quit = self.canvas.create_rectangle(
+            x - LARGEUR // 2, y - HAUTEUR // 2, 
+            x + LARGEUR // 2, y + HAUTEUR // 2, 
+            fill="", 
+            outline="", 
+            tags="btn_quit" ) 
+        self.canvas.tag_bind( 
+            zone_quit, 
+            "<Button-1>", 
+            lambda e: controller.destroy() 
+)
         
         # Zones cliquables invisibles calées sur les touches de l'image
         LARGEUR = 60   
@@ -246,9 +297,22 @@ class Page3(Frame):
         self.btn_bfs.place(relx=0.2, rely=0.2, anchor="center")
 
         # Quitter
-        ttk.Button(self, text="Quit",
-                   command=controller.destroy)\
-            .place(relx=0.95, rely=0.05, anchor="center")
+        # Zone cliquable invisible pour "Quit" 
+        LARGEUR = 100
+        HAUTEUR = 40 
+        x = int(0.95 * 1024) 
+        y = int(0.05 * 608) 
+        zone_quit = self.canvas.create_rectangle(
+            x - LARGEUR // 2, y - HAUTEUR // 2, 
+            x + LARGEUR // 2, y + HAUTEUR // 2, 
+            fill="", 
+            outline="", 
+            tags="btn_quit" ) 
+        self.canvas.tag_bind( 
+            zone_quit, 
+            "<Button-1>", 
+            lambda e: controller.destroy() 
+)
         
         self.concernés=concernés_dict
         self.init_graph()

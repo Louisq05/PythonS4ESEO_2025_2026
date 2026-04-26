@@ -469,12 +469,12 @@ class Page3(Frame):
                 messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
         print("Graph choisi : ", chemin)
     
-    def show_circle_delay(self, prev_node, current_node):
-        if prev_node is not None:
-            self.draw_arrow(prev_node, current_node)
-            self.show_message(prev_node, current_node)
+    # def show_circle_delay(self, prev_node, current_node):
+    #     if prev_node is not None:
+    #         self.draw_arrow(prev_node, current_node)
+    #         self.show_message(prev_node, current_node)
 
-        self.show_circle(self.concernés[current_node]["circle_id"],self.concernés[current_node]["text_id"])
+    #     self.show_circle(self.concernés[current_node]["circle_id"],self.concernés[current_node]["text_id"])
 
         # if remaining_path:
         #     next_node = remaining_path[0]

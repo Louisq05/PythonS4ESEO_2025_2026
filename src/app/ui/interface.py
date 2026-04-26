@@ -185,6 +185,16 @@ class Page2(Frame):
         ttk.Button(self, text="Quit",
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
+        
+          # Création du clavier
+
+        clavier = [[0.42, 0.67], [0.5, 0.69], [0.58, 0.67], [0.42, 0.74], [0.5, 0.76], [0.58, 0.74],  [0.42, 0.81], [0.5, 0.83], [0.58, 0.81], [0.5, 0.9]]
+
+        for i in range(len(clavier)) :
+            index=i
+            self.btn_dfs = ttk.Button(self, text=str(i),
+                        command=lambda i=index: self.choisir_personne(i))
+            self.btn_dfs.place(relx=clavier[i][0], rely=clavier[i][1], anchor="center")
 
 
     def choisir_personne(self, index):

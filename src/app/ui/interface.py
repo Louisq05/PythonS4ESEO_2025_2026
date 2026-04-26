@@ -46,6 +46,25 @@ concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
 
 bouton = None
 
+def formatage_text(text,max_lenght):
+    if len(text) > max_lenght:
+            words=text.split(" ")
+            count=0
+            lines = []
+            intermediate_text=""
+            for i in words:
+                count+=len(i)+1
+                if count <=max_lenght:
+                    intermediate_text+=f"{i} "
+                else:
+                    lines.append(intermediate_text)
+                    intermediate_text=f"{i} "
+                    count=len(i)
+            lines.append(intermediate_text)
+            return "\n".join(lines)
+    else:
+        return text
+
 class App(Tk):
     def __init__(self):
         super().__init__()
@@ -98,28 +117,11 @@ class Page1(Frame):
             rumeurs_text=k
             rumeurs_concernés=v
             print("Rumeur choisie : ", rumeurs_text, "\nConcerné : ", rumeurs_concernés)
-        if len(rumeurs_text) > 30:
-            words=rumeurs_text.split(" ")
-            count=0
-            lines = []
-            intermediate_text=""
-            for i in words:
-                count+=len(i)+1
-                if count <=30:
-                    intermediate_text+=f"{i} "
-                else:
-                    lines.append(intermediate_text)
-                    intermediate_text=f"{i} "
-                    count=len(i)
-            lines.append(intermediate_text)
-            rumeurs_text_formated = "\n".join(lines)
-        else:
-            rumeurs_text_formated = rumeurs_text
             
         # Texte : titre "Rumeur :"
         self.canvas.create_text(
             512, 300,
-            text=rumeurs_text_formated,
+            text=formatage_text(rumeurs_text,30),
             font=("OCR A Extended", 15),
             fill="black",
             justify="center",
@@ -294,9 +296,9 @@ class Page3(Frame):
 
         # Texte pour le choix de l'option :
         self.text_choix = self.canvas.create_text(
-            100, 120,
+            92, 120,
             text="choisir une\noption :",
-            font=("OCR A Extended", 10, "bold"),
+            font=("OCR A Extended", 8, "bold"),
             fill="black",
             justify="center"
         )
@@ -483,13 +485,13 @@ class Page3(Frame):
         if from_node==to_node:
             message=f"Vous en avez parlé\nà la personne concerné"
         elif to_node==rumeurs_concernés:
-            message=f"{to_node},\nà été mis au courant !"
+            message=f"{to_node}\nà été mis au courant"
         else:
             message = f"{from_node}\nen a parlé à\n{to_node}"
         if not hasattr(self, "message_id"):
-            self.message_id = self.canvas.create_text(110, 120, text=message, font=("OCR A Extended", 7, "bold"), fill="#000000")
+            self.message_id = self.canvas.create_text(95, 130, text=formatage_text(message,17), font=("OCR A Extended", 6, "bold"), fill="#000000",justify=("center"))
         else:
-            self.canvas.itemconfig(self.message_id, text=message)
+            self.canvas.itemconfig(self.message_id, text=formatage_text(message,17))
     
     def draw_arrow(self, from_node, to_node):
         c_coords = self.canvas.coords(self.concernés[from_node]["circle_id"])

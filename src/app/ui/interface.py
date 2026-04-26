@@ -23,7 +23,7 @@ rumeurs = [{"M. Boubaker est en réalité marié à une surveillante de l’Eseo
 {"Chloe Jarousseau est encore sous l’emprise d’un illusionniste qui l’a hypnotisé en 2022.":"Chloe Jarousseau"}, 
 {"Le batiment de l’Eseo Dijon est construit sur un site paranormal et M. Trenchant analyse les ondes.":"M. Trenchant"},
 {"M. Vallee passe les vacances d’été sur un yatch financé par l’eseo.":"M. Vallee"},
-{"Louis est sur le point de quitter ESEO pour accepter un CDI chez Atol CD à 42M/an":"Louis Quibeuf"}]
+{"Louis est sur le point de quitter ESEO pour accepter un CDI chez Atol CD à 42M/an.":"Louis Quibeuf"}]
 
 concernés_lst = ["M. Boubaker", "Victor", "M. Vallee", "M. Trenchant", "Loan", "M. Schlinquer", "Nils", "Tristan", "Nils", "Chloe Jarousseau", "M. Trenchant", "M. Vallee" ]
 concernés_dict={"M. Boubaker":{"name":"M. Boubaker","x":0.5,"y":0.475},
@@ -97,18 +97,25 @@ class Page1(Frame):
         for k,v in choice(rumeurs).items():
             rumeurs_text=k
             rumeurs_concernés=v
-            print("Rumeur choisie : ", rumeurs_text, "\nConcerné : ", rumeurs_concernés)  
+            print("Rumeur choisie : ", rumeurs_text, "\nConcerné : ", rumeurs_concernés)
         if len(rumeurs_text) > 30:
+            words=rumeurs_text.split(" ")
+            count=0
             lines = []
-            nb_lignes = len(rumeurs_text) // 30 + 1
-
-            for i in range(nb_lignes):
-                lines.append(rumeurs_text[30*i:30*(i+1)])
-
+            intermediate_text=""
+            for i in words:
+                count+=len(i)+1
+                if count <=30:
+                    intermediate_text+=f"{i} "
+                else:
+                    lines.append(intermediate_text)
+                    intermediate_text=f"{i} "
+                    count=len(i)
+            lines.append(intermediate_text)
             rumeurs_text_formated = "\n".join(lines)
         else:
             rumeurs_text_formated = rumeurs_text
-
+            
         # Texte : titre "Rumeur :"
         self.canvas.create_text(
             512, 300,
@@ -116,7 +123,6 @@ class Page1(Frame):
             font=("OCR A Extended", 15),
             fill="black",
             justify="center",
-            width=625
         )
 
         # Boutons

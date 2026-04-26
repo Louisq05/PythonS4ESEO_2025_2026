@@ -414,14 +414,15 @@ class Page3(Frame):
     def run_dfs(self):
         print("DFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"], self.concernés[bouton]["text_id"])
-        print("Point de départ : ", bouton)
         result_path = dfs_path(self.graph, bouton, rumeurs_concernés)
 
         delay = 500
+        if len(result_path) == 1 :
+            self.after(delay, lambda f=result_path[0], t=result_path[0]: self._steps(f, t))
         for i in range(1, len(result_path)):
             from_node = result_path[i - 1]
             to_node = result_path[i]
-            self.after(delay, lambda f=from_node, t=to_node: self._bfs_step(f, t))
+            self.after(delay, lambda f=from_node, t=to_node: self._steps(f, t))
             delay += 500
 
     def run_bfs(self):
@@ -431,23 +432,25 @@ class Page3(Frame):
 
         delay = 500
         if type(result_path) == list :
-            self.after(delay, lambda f=result_path[0], t=result_path[0]: self._bfs_step(f, t))
+            self.after(delay, lambda f=result_path[0], t=result_path[0]: self._steps(f, t))
         else :
             for k, v in result_path.items():
                 for link in v["Au courant"]:
                     from_node, to_node = link[0], link[1]
-                    self.after(delay, lambda f=from_node, t=to_node: self._bfs_step(f, t))
+                    self.after(delay, lambda f=from_node, t=to_node: self._steps(f, t))
                     delay += 500
         
 
-    def _bfs_step(self, from_node, to_node):
-        """Affiche une étape BFS : flèche + cercle + message."""
+    def _steps(self, from_node, to_node):
+        """Affiche une étape /DFS : flèche + cercle + message."""
+        self.show_message(from_node, to_node)
         self.draw_arrow(from_node, to_node)
         self.show_circle(
             self.concernés[to_node]["circle_id"],
             self.concernés[to_node]["text_id"]
         )
-        self.show_message(from_node, to_node)
+        print(from_node, "->", to_node)
+        
 
     def on_dfs_click(self):
         self.canvas.itemconfigure(self.text_BFS, state="hidden")

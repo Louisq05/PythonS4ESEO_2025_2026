@@ -414,9 +414,8 @@ class Page3(Frame):
     def run_dfs(self):
         print("DFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"], self.concernés[bouton]["text_id"])
-        print(bouton)
+        print("Point de départ : ", bouton)
         result_path = dfs_path(self.graph, bouton, rumeurs_concernés)
-        print("result path :", result_path)
 
         delay = 500
         for i in range(1, len(result_path)):
@@ -429,14 +428,17 @@ class Page3(Frame):
         print("BFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"], self.concernés[bouton]["text_id"])
         result_path = bfs_path(self.graph, bouton, rumeurs_concernés)
-        print("result path :", result_path)
 
         delay = 500
-        for k, v in result_path.items():
-            for link in v["Au courant"]:
-                from_node, to_node = link[0], link[1]
-                self.after(delay, lambda f=from_node, t=to_node: self._bfs_step(f, t))
-                delay += 500
+        if type(result_path) == list :
+            self.after(delay, lambda f=result_path[0], t=result_path[0]: self._bfs_step(f, t))
+        else :
+            for k, v in result_path.items():
+                for link in v["Au courant"]:
+                    from_node, to_node = link[0], link[1]
+                    self.after(delay, lambda f=from_node, t=to_node: self._bfs_step(f, t))
+                    delay += 500
+        
 
     def _bfs_step(self, from_node, to_node):
         """Affiche une étape BFS : flèche + cercle + message."""
@@ -468,20 +470,9 @@ class Page3(Frame):
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
         print("Graph choisi : ", chemin)
-    
-    # def show_circle_delay(self, prev_node, current_node):
-    #     if prev_node is not None:
-    #         self.draw_arrow(prev_node, current_node)
-    #         self.show_message(prev_node, current_node)
-
-    #     self.show_circle(self.concernés[current_node]["circle_id"],self.concernés[current_node]["text_id"])
-
-        # if remaining_path:
-        #     next_node = remaining_path[0]
-        #     remain = remaining_path[1:]
-        #     self.after(randint(500, 1500), lambda: self.show_circle_delay(current_node, next_node, remain))
 
     def show_message(self, from_node, to_node):
+        print(from_node, "->", to_node, end=" | ")
         if from_node==to_node:
             message=f"Vous en avez parlé\nà la personne concerné"
         elif to_node==rumeurs_concernés:

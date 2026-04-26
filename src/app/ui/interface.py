@@ -432,8 +432,8 @@ class Page3(Frame):
         print("result path :", result_path)
 
         delay = 500
-        for i in range(1, len(result_path)):
-            for link in i["Au courant"]:
+        for k, v in result_path.items():
+            for link in v["Au courant"]:
                 from_node, to_node = link[0], link[1]
                 self.after(delay, lambda f=from_node, t=to_node: self._bfs_step(f, t))
                 delay += 500

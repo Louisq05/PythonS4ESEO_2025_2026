@@ -292,18 +292,60 @@ class Page3(Frame):
         self.bg = PhotoImage(file=IMAGE_PATH + "page3.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
+        # Texte pour le choix de l'option :
+        self.text_choix = self.canvas.create_text(
+            100, 120,
+            text="choisir une\noption :",
+            font=("OCR A Extended", 10, "bold"),
+            fill="black",
+            justify="center"
+        )
+
         # DFS
-        self.btn_dfs = ttk.Button(self, text="Je t'en parle, mais ne le dis à personne (DFS)",
-                    command=lambda: self.on_dfs_click())
-        self.btn_dfs.place(relx=0.2, rely=0.15, anchor="center")
+        # Texte pour le choix du DFS :
+        self.text_DFS = self.canvas.create_text(
+            90, 145,
+            text="1 : DFS",
+            font=("OCR A Extended", 10, "bold"),
+            fill="black",
+            justify="center"
+        )
+        # Bouton DFS
+        LARGEUR = 40
+        HAUTEUR = 20
+        x = int(0.1 * 1024)
+        y = int(0.38 * 608)
+        zone_DFS = self.canvas.create_rectangle(
+            x - LARGEUR // 2, y - HAUTEUR // 2,
+            x + LARGEUR // 2, y + HAUTEUR // 2,
+            fill="", outline="",
+            tags="btn_DFS"
+        )
+        self.canvas.tag_bind(zone_DFS, "<Button-1>", lambda e: self.on_dfs_click())
 
         # BFS
-        self.btn_bfs = ttk.Button(self, text="Tu as entendu la nouvelle ? (BFS)",
-                    command=lambda: self.on_bfs_click())
-        self.btn_bfs.place(relx=0.2, rely=0.2, anchor="center")
+        # Texte pour le choix du BFS :
+        self.text_BFS = self.canvas.create_text(
+            90, 155,
+            text="2 : BFS",
+            font=("OCR A Extended", 10, "bold"),
+            fill="black",
+            justify="center"
+        )
+        # Bouton BFS
+        LARGEUR = 40
+        HAUTEUR = 20
+        x = int(0.05 * 1024)
+        y = int(0.38 * 608)
+        zone_BFS = self.canvas.create_rectangle(
+            x - LARGEUR // 2, y - HAUTEUR // 2,
+            x + LARGEUR // 2, y + HAUTEUR // 2,
+            fill="", outline="",
+            tags="btn_BFS"
+        )
+        self.canvas.tag_bind(zone_BFS, "<Button-1>", lambda e: self.on_bfs_click())
 
         # Quitter
-        # Zone cliquable invisible pour "Quit" 
         LARGEUR = 100
         HAUTEUR = 40 
         x = int(0.09 * 1024) 
@@ -318,7 +360,7 @@ class Page3(Frame):
             zone_quit, 
             "<Button-1>", 
             lambda e: controller.destroy() 
-)
+    )
         
         self.concernés=concernés_dict
         self.init_graph()
@@ -404,13 +446,15 @@ class Page3(Frame):
         self.show_message(from_node, to_node)
 
     def on_dfs_click(self):
-        self.btn_dfs.place_forget()
-        self.btn_bfs.place_forget()
+        self.canvas.itemconfigure(self.text_BFS, state="hidden")
+        self.canvas.itemconfigure(self.text_DFS, state="hidden")
+        self.canvas.itemconfigure(self.text_choix, state="hidden")
         self.run_dfs()
 
     def on_bfs_click(self):
-        self.btn_dfs.place_forget()
-        self.btn_bfs.place_forget()
+        self.canvas.itemconfigure(self.text_BFS, state="hidden")
+        self.canvas.itemconfigure(self.text_DFS, state="hidden")
+        self.canvas.itemconfigure(self.text_choix, state="hidden")
         self.run_bfs()
     
     def init_graph(self):
@@ -437,13 +481,13 @@ class Page3(Frame):
 
     def show_message(self, from_node, to_node):
         if from_node==to_node:
-            message=f"Vous en avez parlé à la personne concerné"
+            message=f"Vous en avez parlé\nà la personne concerné"
         elif to_node==rumeurs_concernés:
-            message=f"{from_node} a appris à {"\n" if len(from_node)+len(to_node)>15 else ""}{to_node} la rumeur le concernant"
+            message=f"{to_node},\nà été mis au courant !"
         else:
-            message = f"{from_node} en a parlé à {to_node}"
+            message = f"{from_node}\nen a parlé à\n{to_node}"
         if not hasattr(self, "message_id"):
-            self.message_id = self.canvas.create_text(220, 100, text=message, font=("Helvetica", 10, "bold"), fill="#07FB28")
+            self.message_id = self.canvas.create_text(110, 120, text=message, font=("OCR A Extended", 7, "bold"), fill="#000000")
         else:
             self.canvas.itemconfig(self.message_id, text=message)
     

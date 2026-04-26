@@ -131,6 +131,13 @@ class Page2(Frame):
         "Chloe Jarousseau", "M. Vallee",
         "Nicol Matheo", "Mary Yanis"
     ]
+    clavier = [
+            [0.42, 0.67], [0.5, 0.69], [0.58, 0.67],
+            [0.42, 0.74], [0.5, 0.76], [0.58, 0.74],
+            [0.42, 0.81], [0.5, 0.83], [0.58, 0.81],
+            [0.5,  0.90]
+        ]
+
     annuaire_data = {
     "M. Boubaker": 0,
     "Louberssac Emilie": 1,
@@ -186,18 +193,27 @@ class Page2(Frame):
                    command=controller.destroy)\
             .place(relx=0.95, rely=0.05, anchor="center")
         
-          # Création du clavier
+        # Zones cliquables invisibles calées sur les touches de l'image
+        LARGEUR = 60   
+        HAUTEUR = 35
 
-        clavier = [[0.42, 0.67], [0.5, 0.69], [0.58, 0.67], [0.42, 0.74], [0.5, 0.76], [0.58, 0.74],  [0.42, 0.81], [0.5, 0.83], [0.58, 0.81], [0.5, 0.9]]
+        for i in range(len(self.clavier)):
+            index = i + 1 if i < 9 else 0
 
-        for i in range(len(clavier)) :
-            if i < 9 :
-                index=i+1
-            else :
-                index = 0
-            self.btn_dfs = ttk.Button(self, text=str(index),
-                        command=lambda i=index: self.choisir_personne(i))
-            self.btn_dfs.place(relx=clavier[i][0], rely=clavier[i][1], anchor="center")
+            x = int(self.clavier[i][0] * 1024)
+            y = int(self.clavier[i][1] * 608)
+
+            zone = self.canvas.create_rectangle(
+                x - LARGEUR // 2, y - HAUTEUR // 2,
+                x + LARGEUR // 2, y + HAUTEUR // 2,
+                fill="",        # transparent
+                outline="",     # pas de bordure visible
+                tags=f"btn_{index}"
+            )
+            self.canvas.tag_bind(
+                zone, "<Button-1>",
+                lambda e, idx=index: self.choisir_personne(idx)
+            )
 
 
     def choisir_personne(self, index):

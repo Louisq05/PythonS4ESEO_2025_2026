@@ -300,8 +300,8 @@ class Page3(Frame):
         # Zone cliquable invisible pour "Quit" 
         LARGEUR = 100
         HAUTEUR = 40 
-        x = int(0.95 * 1024) 
-        y = int(0.05 * 608) 
+        x = int(0.09 * 1024) 
+        y = int(0.3 * 608) 
         zone_quit = self.canvas.create_rectangle(
             x - LARGEUR // 2, y - HAUTEUR // 2, 
             x + LARGEUR // 2, y + HAUTEUR // 2, 

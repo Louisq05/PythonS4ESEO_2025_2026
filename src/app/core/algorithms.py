@@ -202,6 +202,68 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
                     file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
     return None
 
+def bfs_path_to_project(graph: Graph, start: str, goal: str) -> list[str] | None:
+    """
+    Trouve le PLUS COURT chemin entre deux nœuds avec BFS adapté pour notre projet.
+    
+    Args:
+        graph: Le graphe à parcourir
+        start: Nœud de départ
+        goal: Nœud cible
+    
+    Returns:
+        Liste des nœuds du plus court chemin (incluant start et goal)
+        None si aucun chemin n'existe
+    
+    Note:
+        BFS garantit de trouver le plus court chemin en nombre d'arêtes
+        pour un graphe non pondéré.
+    
+    Exemple:
+        >>> g = Graph()
+        >>> g.add_edge("A", "B")
+        >>> g.add_edge("B", "C")
+        >>> g.add_edge("A", "C")  # Chemin direct plus court
+        >>> bfs_path(g, "A", "C")
+        ['A', 'C']
+    
+    Algorithme:
+        Variante de BFS où on stocke le chemin complet dans la file.
+        File contient des tuples (nœud, chemin_jusqu'ici).
+    """
+    if start == goal:               # Si la condition est remplie
+        return [start]              # Sortie de la fonction
+    file = deque()
+    visited = [] 
+    relations = [] 
+    file.append((start, [start]))   # (noeud actuel, chemin jusqu'ici)
+    dict_tours = {}
+    tours = 0
+    finish=False
+    while file:
+        nouveaux = []
+        node, path = file.popleft() # popleft = FO du FIFO
+        if node not in visited:
+            visited.append(node)
+            for i in range(len(graph.neighbors(node))) :
+                relations.append((node,graph.neighbors(node)[i]))
+                for neighbor in graph.neighbors(node):
+                    if neighbor not in visited:
+                        if (node,graph.neighbors(node)[i]) not in nouveaux and (graph.neighbors(node)[i],node) not in relations:
+                            nouveaux.append((node,graph.neighbors(node)[i]))
+                            file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
+                    if neighbor == goal:
+                        #print(relations)
+                        #return visited+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
+                        finish=True
+                         
+        if nouveaux:
+                tours += 1
+                dict_tours[tours] = {"Au courant": nouveaux}
+                if finish :
+                    return dict_tours 
+    return dict_tours
+
 
 # ============================================================================
 # PALIER D : Problèmes classiques sur graphes

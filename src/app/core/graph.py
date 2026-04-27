@@ -143,6 +143,7 @@ class Graph:
             ['B', 'M', 'Z']  # Toujours en ordre alphabétique
         """
         if node not in self.graph :
+            print(self.graph)
             raise ValueError
         return sorted(self.graph[node])
     

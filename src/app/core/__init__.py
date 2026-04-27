@@ -10,6 +10,7 @@ from .algorithms import (
     dfs_path,
     bfs,
     bfs_path,
+    bfs_path_to_project,
     is_connected,
     reachable_from,
     shortest_path,

@@ -13,7 +13,7 @@ else:                 # Mac / Linux
 
 button = None
 
-rumeurs = [{"M. Boubaker est en réalité marié à une surveillante de l’Eseo, et il ont des enfants ensemble dans le secret.":"M. Boubaker"},
+rumeurs = [{"M. Boubaker est en réalité marié à une surveillante de l’Eseo, et ils ont des enfants ensemble dans le secret.":"M. Boubaker"},
 {"Arthur déteste en secret son pote Victor, il n’a dieu que pour Tomy.":"Victor Bon"}, 
 {"Chaque soir sont organisé des soirées par M. Vallee dans le sous-sol de l’Eseo.":"M. Vallee"}, 
 {"M. Trenchant prépare un contrôle surprise en physique quantique.":"M. Trenchant"}, 
@@ -71,6 +71,7 @@ class App(Tk):
 
         self.title("Explorateur de Graphes - ESEO S4")
         self.geometry("1024x608")
+        self.resizable(height=False, width=False)
 
         # Conteneur principal
         container = Frame(self)

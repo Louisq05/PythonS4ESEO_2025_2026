@@ -188,6 +188,52 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
     if start == goal:               # Si la condition est remplie
         return [start]              # Sortie de la fonction
     file = deque()
+    visited = []  
+    file.append((start, [start]))   # (noeud actuel, chemin jusqu'ici)
+
+    while file:
+        node, path = file.popleft() # popleft = FO du FIFO
+        if node not in visited:
+            visited.append(node)
+            for neighbor in graph.neighbors(node):
+                if neighbor == goal:
+                    return visited+ [neighbor]        #Changement de la logique pour l'affichage (a revoir)
+                if neighbor not in visited:
+                    file.append((neighbor, path + [neighbor]))      # Ajouter les voisins plus le chemin
+    return None
+
+def bfs_path_to_project(graph: Graph, start: str, goal: str) -> list[str] | None:
+    """
+    Trouve le PLUS COURT chemin entre deux nœuds avec BFS.
+    
+    Args:
+        graph: Le graphe à parcourir
+        start: Nœud de départ
+        goal: Nœud cible
+    
+    Returns:
+        Liste des nœuds du plus court chemin (incluant start et goal)
+        None si aucun chemin n'existe
+    
+    Note:
+        BFS garantit de trouver le plus court chemin en nombre d'arêtes
+        pour un graphe non pondéré.
+    
+    Exemple:
+        >>> g = Graph()
+        >>> g.add_edge("A", "B")
+        >>> g.add_edge("B", "C")
+        >>> g.add_edge("A", "C")  # Chemin direct plus court
+        >>> bfs_path(g, "A", "C")
+        ['A', 'C']
+    
+    Algorithme:
+        Variante de BFS où on stocke le chemin complet dans la file.
+        File contient des tuples (nœud, chemin_jusqu'ici).
+    """
+    if start == goal:               # Si la condition est remplie
+        return [start]              # Sortie de la fonction
+    file = deque()
     visited = [] 
     relations = [] 
     file.append((start, [start]))   # (noeud actuel, chemin jusqu'ici)

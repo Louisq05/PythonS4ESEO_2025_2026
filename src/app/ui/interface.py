@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from random import choice, randint
 import os
-from ..core import Graph,save_graph,load_graph,is_connected,dfs,dfs_path,bfs,bfs_path
+from ..core import Graph,save_graph,load_graph,is_connected,dfs,dfs_path,bfs,bfs_path,bfs_path_to_project
 from tkinter import messagebox,filedialog
 
 # Détection de l'OS
@@ -429,7 +429,7 @@ class Page3(Frame):
     def run_bfs(self):
         print("BFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"], self.concernés[bouton]["text_id"])
-        result_path = bfs_path(self.graph, bouton, rumeurs_concernés)
+        result_path = bfs_path_to_project(self.graph, bouton, rumeurs_concernés)
 
         delay = 500
         if type(result_path) == list :

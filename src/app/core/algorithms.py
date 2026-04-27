@@ -204,7 +204,7 @@ def bfs_path(graph: Graph, start: str, goal: str) -> list[str] | None:
 
 def bfs_path_to_project(graph: Graph, start: str, goal: str) -> list[str] | None:
     """
-    Trouve le PLUS COURT chemin entre deux nœuds avec BFS.
+    Trouve le PLUS COURT chemin entre deux nœuds avec BFS adapté pour notre projet.
     
     Args:
         graph: Le graphe à parcourir

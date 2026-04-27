@@ -99,11 +99,17 @@ class Page1(Frame):
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
-        # Référence image de fond
-        self.bg = PhotoImage(file=IMAGE_PATH + "page1.png", master=self.canvas)
-
         # Image de fond
+        self.bg = PhotoImage(file=IMAGE_PATH + "page1.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
+
+        #Choix de la Rumeur
+        global rumeurs_text
+        global rumeurs_concernés
+        for k,v in choice(rumeurs).items():
+            rumeurs_text=k
+            rumeurs_concernés=v
+            print("Rumeur choisie : ", rumeurs_text, "\nConcerné : ", rumeurs_concernés)
 
         # Texte : titre "Rumeur :"
         self.canvas.create_text(
@@ -112,14 +118,7 @@ class Page1(Frame):
             font=("OCR A Extended", 30, "bold"),
             fill="black"
         )
-        global rumeurs_text
-        global rumeurs_concernés
-        for k,v in choice(rumeurs).items():
-            rumeurs_text=k
-            rumeurs_concernés=v
-            print("Rumeur choisie : ", rumeurs_text, "\nConcerné : ", rumeurs_concernés)
             
-        # Texte : titre "Rumeur :"
         self.canvas.create_text(
             512, 300,
             text=formatage_text(rumeurs_text,30),
@@ -128,7 +127,7 @@ class Page1(Frame):
             justify="center",
         )
 
-        # Boutons
+        # Boutons : 
 
         # Zone cliquable invisible pour "Suivant"
         LARGEUR = 200   # augmente ici (x2-x3)
@@ -149,8 +148,9 @@ class Page1(Frame):
             zone_suivant,
             "<Button-1>",
             lambda e: controller.show_frame(Page2)
-        ) 
-# Zone cliquable invisible pour "Quit" 
+        )
+
+        # Zone cliquable invisible pour "Quit" 
         LARGEUR = 100
         HAUTEUR = 40 
         x = int(0.95 * 1024) 
@@ -246,12 +246,13 @@ class Page2(Frame):
             x + LARGEUR // 2, y + HAUTEUR // 2, 
             fill="", 
             outline="", 
-            tags="btn_quit" ) 
+            tags="btn_quit" 
+        ) 
         self.canvas.tag_bind( 
             zone_quit, 
             "<Button-1>", 
             lambda e: controller.destroy() 
-)
+        )
         
         # Zones cliquables invisibles calées sur les touches de l'image
         LARGEUR = 60   
@@ -277,6 +278,7 @@ class Page2(Frame):
 
 
     def choisir_personne(self, index):
+        """Fonction qui permet de faire le choix de la personne avec le clavier."""
         print("Point de départ :", self.noms[index])
         self.controller.show_frame(Page3)
         global bouton
@@ -292,6 +294,7 @@ class Page3(Frame):
         self.canvas = Canvas(self, width=1024, height=608, highlightthickness=0)
         self.canvas.pack(fill="both", expand=True)
 
+        #Définition du background
         self.bg = PhotoImage(file=IMAGE_PATH + "page3.png", master=self.canvas)
         self.canvas.create_image(0, 0, image=self.bg, anchor="nw")
 
@@ -304,7 +307,6 @@ class Page3(Frame):
             justify="center"
         )
 
-        # DFS
         # Texte pour le choix du DFS :
         self.text_DFS = self.canvas.create_text(
             90, 145,
@@ -313,6 +315,7 @@ class Page3(Frame):
             fill="black",
             justify="center"
         )
+
         # Bouton DFS
         LARGEUR = 40
         HAUTEUR = 20
@@ -326,7 +329,6 @@ class Page3(Frame):
         )
         self.canvas.tag_bind(zone_DFS, "<Button-1>", lambda e: self.on_dfs_click())
 
-        # BFS
         # Texte pour le choix du BFS :
         self.text_BFS = self.canvas.create_text(
             90, 155,
@@ -335,7 +337,6 @@ class Page3(Frame):
             fill="black",
             justify="center"
         )
-        # Bouton BFS
         LARGEUR = 40
         HAUTEUR = 20
         x = int(0.1 * 1024)
@@ -348,7 +349,7 @@ class Page3(Frame):
         )
         self.canvas.tag_bind(zone_BFS, "<Button-1>", lambda e: self.on_bfs_click())
 
-        # Quitter
+        # Texte pour le choix de quitter :
         LARGEUR = 100
         HAUTEUR = 40 
         x = int(0.09 * 1024) 
@@ -363,14 +364,14 @@ class Page3(Frame):
             zone_quit, 
             "<Button-1>", 
             lambda e: controller.destroy() 
-    )
+        )
         
         self.concernés=concernés_dict
         self.init_graph()
         self._create_circle()
 
     # Fonction pour créer un cercle 
-    def _add_circle(self, relx=0.5, rely=0.5, radius=10, color="#E74C3C", outline="#ffffff", text="!", text_color="white"): # Choisir les couleurs
+    def _add_circle(self, relx=0.5, rely=0.5, radius=10, color="#E74C3C", outline="#ffffff", text="!", text_color="white"):
         """Dessine un cercle sur le canvas principal."""
 
         x = int(relx * 1024)
@@ -386,6 +387,7 @@ class Page3(Frame):
                                     font=("Arial", 12, "bold"), state="hidden")         # Choix du text
             return circle_id,text_id
     def _create_circle(self):
+        """Fonction qui ajoute le nom quand on passe sur le cercle"""
         for k,v in self.concernés.items():
             self.concernés[k]["circle_id"],self.concernés[k]["text_id"]=self._add_circle(relx=v["x"],rely=v["y"])
         # Bind hover events to the circle using the specific name
@@ -395,24 +397,29 @@ class Page3(Frame):
             self.canvas.tag_bind(self.concernés[k]["text_id"], "<Leave>", self.on_leave)
     
     def on_enter(self, event, name):
+        """Fonction utiliser par __create_circle pour afficher le nom à l'entrée"""
         # Display the name when hovering over the oval
         self.canvas.create_text(event.x + 25, event.y - 15, text=name,
                                 fill="red", font=("Arial", 12, "bold"),
                                 tags="tooltip")
 
     def on_leave(self, event):
+        """Fonction utiliser par __create_circle pour afficher le nom à la sortie"""
         # Remove the tooltip
         self.canvas.delete("tooltip")
     
     def show_circle(self,circle_id,text_id):
+        """Fonction pour afficher le cercle"""
         self.canvas.itemconfigure(circle_id, state="normal")
         self.canvas.itemconfigure(text_id, state="normal")
 
     def hide_circle(self,circle_id,text_id):
+        """Fonction pour cacher le cercle"""
         self.canvas.itemconfigure(circle_id, state="hidden")
         self.canvas.itemconfigure(text_id, state="hidden")
 
     def run_dfs(self):
+        """Fonction appeler pour lancer le dfs"""
         print("DFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"], self.concernés[bouton]["text_id"])
         result_path = dfs_path(self.graph, bouton, rumeurs_concernés)
@@ -427,6 +434,7 @@ class Page3(Frame):
             delay += 500
 
     def run_bfs(self):
+        """Fonction appeler pour lancer le bfs"""
         print("BFS choisi")
         self.show_circle(self.concernés[bouton]["circle_id"], self.concernés[bouton]["text_id"])
         result_path = bfs_path_to_project(self.graph, bouton, rumeurs_concernés)
@@ -454,28 +462,31 @@ class Page3(Frame):
         
 
     def on_dfs_click(self):
+        """Fonction qui lance le dfs quand le boutton dfs"""
         self.canvas.itemconfigure(self.text_BFS, state="hidden")
         self.canvas.itemconfigure(self.text_DFS, state="hidden")
         self.canvas.itemconfigure(self.text_choix, state="hidden")
         self.run_dfs()
 
     def on_bfs_click(self):
+        """Fonction qui lance le dfs quand le boutton bfs"""
         self.canvas.itemconfigure(self.text_BFS, state="hidden")
         self.canvas.itemconfigure(self.text_DFS, state="hidden")
         self.canvas.itemconfigure(self.text_choix, state="hidden")
         self.run_bfs()
     
     def init_graph(self):
+        """Fonction qui iniatilise le graphe"""
         chemin=IMAGE_PATH+f"graph{str(randint(1,5))}.json"
         if chemin:
             try:
                 self.graph=load_graph(chemin)   #Utilise la fonction load_graph de src\app\core\io.py pour charger
-                #messagebox.showinfo("Succès", "Fichier chargé avec succès !")   #Affiche la réussite du chargement d'un fichier
             except Exception as e:
-                messagebox.showerror("Erreur", str(e))              #Affiche l'échec lors du chargement d'un fichier
+                messagebox.showerror("Erreur", str(e))        #Affiche l'échec lors du chargement d'un fichier
         print("Graph choisi : ", chemin)
 
     def show_message(self, from_node, to_node):
+        """Fonction qui ajoute un message sur le téléphone pour avoir un retour sur ce qui ce passe."""
         print(from_node, "->", to_node, end=" | ")
         if from_node==to_node:
             message=f"Vous en avez parlé\nà la personne concerné"
@@ -489,6 +500,7 @@ class Page3(Frame):
             self.canvas.itemconfig(self.message_id, text=formatage_text(message,17))
     
     def draw_arrow(self, from_node, to_node):
+        """Fonction qui trace les flèches pour montrer les liens utiliser par le dfs and bfs."""
         c_coords = self.canvas.coords(self.concernés[from_node]["circle_id"])
         n_coords = self.canvas.coords(self.concernés[to_node]["circle_id"])
 
